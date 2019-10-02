@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/view_money"
+    android:layout_marginRight="30dp"
+    android:layout_marginLeft="30dp"
+    android:paddingBottom="20dp">
+
+    <TextView
+        android:id="@+id/text_view_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your all money"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_money"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/money_view_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="200"
+            android:textSize="35dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bath"
+            android:textSize="25dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="50dp"/>
+
+    </RelativeLayout>
+</RelativeLayout>
