@@ -5,7 +5,7 @@
     <color name="colorAccent">#D92139</color>
     <color name="colorBottomNavigationView">#FFFFFF</color>
 
-    <color name="transparent">#00000000</color>
+    <color name="transparent">#666666</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="lighter_grey">#DDDDDD</color>
