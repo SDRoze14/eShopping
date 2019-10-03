@@ -1,14 +1,14 @@
 package dev.ecommerce.eshopping.Model;
 
 public class User {
-    private String name,phone,password,image,address,gender,email,status;
+    private String name,phone,password,image,address,gender,email;
     private Integer money;
 
     public User(){
 
     }
 
-    public User(String name, String phone, String password, String image, String address, String gender, String email, Integer money, String status) {
+    public User(String name, String phone, String password, String image, String address, String gender, String email, Integer money) {
         this.name = name;
         this.phone = phone;
         this.password = password;
@@ -17,7 +17,6 @@ public class User {
         this.gender = gender;
         this.email = email;
         this.money = money;
-        this.status = status;
     }
 
     public String getName() {
@@ -84,11 +83,4 @@ public class User {
         this.money = money;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

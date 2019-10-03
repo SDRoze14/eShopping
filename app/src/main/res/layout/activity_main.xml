@@ -28,7 +28,6 @@
             android:gravity="center"
             android:text="e"
             android:textSize="50sp"
-            app:fontFamily="@font/carter_one"
             android:textColor="@color/colorAccent"/>
 
         <TextView
@@ -38,7 +37,6 @@
             android:gravity="center"
             android:text="Shopping"
             android:textSize="50sp"
-            app:fontFamily="@font/carter_one"
             android:textColor="@color/colorPrimaryDark"/>
     </LinearLayout>
 

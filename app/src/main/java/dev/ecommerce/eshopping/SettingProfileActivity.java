@@ -90,6 +90,7 @@ public class SettingProfileActivity extends AppCompatActivity {
         addressSetting.setText(Prevalent.currentOnlineUser.getAddress());
         emailSetting.setText(Prevalent.currentOnlineUser.getEmail());
 
+
         userInfoDisplay(imageProfileSetting,nameSetting,phoneSetting,addressSetting,emailSetting,gender);
 
         close.setOnClickListener(new View.OnClickListener() {
