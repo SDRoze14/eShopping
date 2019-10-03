@@ -33,13 +33,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         Picasso.get().load(Prevalent.currentOnlineUser.getImage()).placeholder(R.drawable.user_profile).into(imageProfile);
 
-        scan_barcode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, LiveBarcodeScanningActivity.class);
-                startActivity(intent);
-            }
-        });
+//        scan_barcode.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(HomeActivity.this, LiveBarcodeScanningActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         imageProfile.setOnClickListener(new View.OnClickListener() {
             @Override

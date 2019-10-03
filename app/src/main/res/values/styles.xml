@@ -1,6 +1,7 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -13,11 +14,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.Nev." parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="itemIconTint">@android:color/darker_gray</item>
-        <item name="itemTextColor">@android:color/darker_gray</item>
-        <item name="android:actionBarStyle">@style/AppTheme.Nev.</item>
-    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -25,46 +21,6 @@
 
     <style name="EditTextLight" parent="Theme.AppCompat.Light">
         <item name="colorControlActivated">@color/colorPrimary</item>
-    </style>
-
-    <style name="HomeItemLayoutStyle">
-        <item name="android:layout_width">120dp</item>
-        <item name="android:layout_height">100dp</item>
-        <item name="android:layout_margin">10dp</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:gravity">top|center</item>
-        <item name="android:padding">5dp</item>
-        </style>
-
-    <style name="HomeItemImageStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="HomeItemLabelStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">#fff</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:gravity">center_horizontal</item>
-    </style>
-
-    <style name="TextStyle">
-        <item name="android:textSize">16sp</item>
-        <item name="android:layout_marginLeft">5dp</item>
-    </style>
-
-    <style name="EditStyle">
-        <item name="android:padding">5dp</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:layout_margin">5dp</item>
-        <item name="android:minWidth">350dp</item>
-        <item name="android:maxWidth">450dp</item>
-        <item name="android:background">@drawable/shape_edit</item>
-        <item name="android:lines">1</item>
-        <item name="android:gravity">top</item>
-        <item name="android:layout_marginBottom">15dp</item>
     </style>
 
 </resources>
