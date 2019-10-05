@@ -42,7 +42,7 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
 
     private SurfaceView surfaceView;
     private CameraSource cameraSource;
-    private TextView text_code;
+    private TextView text_code,re_scan;
     private Button btn_confirm_cart;
     private BarcodeDetector barcodeDetector;
 
@@ -58,6 +58,7 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
         surfaceView = findViewById(R.id.camera_preview);
         text_code = findViewById(R.id.text_code);
         btn_confirm_cart = findViewById(R.id.confirm_cart);
+        re_scan = findViewById(R.id.re_scan);
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -65,11 +66,16 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
         dateid = dateFormat1.format(calendar.getTime());
         date = dateFormat2.format(calendar.getTime());
 
-
-
+        re_scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                text_code.setText(null);
+            }
+        });
 
         barcodeDetector = new BarcodeDetector.Builder(this)
-                .setBarcodeFormats(Barcode.QR_CODE
+                .setBarcodeFormats(
+                        Barcode.QR_CODE
                 ).build();
 
         cameraSource = new CameraSource.Builder(this,barcodeDetector)
@@ -117,7 +123,6 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
                             text_code.setText(qrcode.valueAt(0).displayValue);
                             cart = qrcode.valueAt(0).displayValue;
                             id_order = Prevalent.currentOnlineUser.getPhone()+qrcode.valueAt(0).displayValue+dateid;
-                            cameraSource.stop();
                         }
                     });
                 }
