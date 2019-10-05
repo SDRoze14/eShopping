@@ -63,7 +63,7 @@ public class ScanBarcodeActivity extends AppCompatActivity {
         camera_scan_barcode.addCameraKitListener(new CameraKitEventListener() {
             @Override
             public void onEvent(CameraKitEvent cameraKitEvent) {
-
+//
             }
 
             @Override
