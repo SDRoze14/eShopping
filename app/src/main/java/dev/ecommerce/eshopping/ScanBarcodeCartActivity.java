@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -135,7 +136,8 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
         btn_confirm_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(ScanBarcodeCartActivity.this, ListActivity.class);
+                startActivity(intent);
                 AddOrders(phone, cart, id_order,date);
             }
         });

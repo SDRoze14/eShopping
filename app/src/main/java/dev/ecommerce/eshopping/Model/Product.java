@@ -2,85 +2,40 @@ package dev.ecommerce.eshopping.Model;
 
 public class Product {
 
-    private String barcode, pname, pmodel, ptime, description, pimage;
-    private Integer price, quantity;
+    private String product_name, UID;
+    private Float product_price;
 
-    public Product() {
+    public Product(){
 
     }
 
-    public Product(String barcode, String pname, String pmodel, String ptime, String description, String pimage, Integer price, Integer quantity) {
-        this.barcode = barcode;
-        this.pname = pname;
-        this.pmodel = pmodel;
-        this.ptime = ptime;
-        this.description = description;
-        this.pimage = pimage;
-        this.price = price;
-        this.quantity = quantity;
+    public Product (String product_name, String UID, Float product_price) {
+        this.product_name = product_name;
+        this.UID = UID;
+        this.product_price = product_price;
     }
 
-    public String getBarcode() {
-        return barcode;
+    public String getProduct_name() {
+        return product_name;
     }
 
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
     }
 
-    public String getPname() {
-        return pname;
+    public String getUID() {
+        return UID;
     }
 
-    public void setPname(String pname) {
-        this.pname = pname;
+    public void setUID(String UID) {
+        this.UID = UID;
     }
 
-    public String getPmodel() {
-        return pmodel;
+    public Float getProduct_price() {
+        return product_price;
     }
 
-    public void setPmodel(String pmodel) {
-        this.pmodel = pmodel;
-    }
-
-    public String getPtime() {
-        return ptime;
-    }
-
-    public void setPtime(String ptime) {
-        this.ptime = ptime;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getPimage() {
-        return pimage;
-    }
-
-    public void setPimage(String pimage) {
-        this.pimage = pimage;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setProduct_price(Float product_price) {
+        this.product_price = product_price;
     }
 }
