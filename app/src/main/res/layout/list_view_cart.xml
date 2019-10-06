@@ -1,0 +1,47 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <ImageView
+        android:id="@+id/pic_product_list"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_crop_original_black_24dp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/id_product_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID : 885000070102410"
+            android:textSize="17sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/name_product_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/id_product_list"
+            android:text="Name product"
+            android:textSize="17sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/price_product_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name_product_list"
+            android:text="XXX Bath"
+            android:textSize="17sp"
+            android:textColor="@color/colorAccent"/>
+    </RelativeLayout>
+</LinearLayout>
