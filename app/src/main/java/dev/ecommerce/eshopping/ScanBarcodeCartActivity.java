@@ -123,6 +123,7 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
                         public void run() {
                             text_code.setText(qrcode.valueAt(0).displayValue);
                             cart = qrcode.valueAt(0).displayValue;
+
                             id_order = Prevalent.currentOnlineUser.getPhone()+qrcode.valueAt(0).displayValue+dateid;
                         }
                     });
@@ -137,6 +138,7 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ScanBarcodeCartActivity.this, ListActivity.class);
+                intent.putExtra("cart", cart);
                 startActivity(intent);
                 AddOrders(phone, cart, id_order,date);
             }
