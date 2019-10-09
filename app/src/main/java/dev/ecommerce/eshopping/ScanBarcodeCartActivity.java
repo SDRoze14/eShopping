@@ -71,6 +71,7 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 text_code.setText(null);
+
             }
         });
 
@@ -128,6 +129,9 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
                         }
                     });
                 }
+                else {
+                    Toast.makeText(ScanBarcodeCartActivity.this, "Scan QR code on cart", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -137,10 +141,15 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
         btn_confirm_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ScanBarcodeCartActivity.this, ListActivity.class);
-                intent.putExtra("cart", cart);
-                startActivity(intent);
-                AddOrders(phone, cart, id_order,date);
+                if (text_code == null) {
+                    Toast.makeText(ScanBarcodeCartActivity.this, "Scan QR code on cart.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent = new Intent(ScanBarcodeCartActivity.this, ListActivity.class);
+                    intent.putExtra("cart", cart);
+                    startActivity(intent);
+                    AddOrders(phone, cart, id_order,date);
+                }
             }
         });
 

@@ -103,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
                     userdatMap.put("name", inputName);
                     userdatMap.put("password", inputPassword);
                     userdatMap.put("status", "User");
+                    userdatMap.put("money", 0);
 
                     ref.child("Users").child(inputPhone).updateChildren(userdatMap)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
