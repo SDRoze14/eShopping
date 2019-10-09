@@ -30,6 +30,16 @@
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear_list"
+        android:layout_above="@+id/list_total_price">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
     <Button
         android:id="@+id/pay_list"
         android:layout_width="match_parent"
@@ -43,11 +53,17 @@
         android:background="@color/colorPrimary"/>
 
     <TextView
-        android:id="@+id/list_view_cart"
-        android:layout_width="wrap_content"
+        android:id="@+id/list_total_price"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:layout_below="@+id/linear_list"></TextView>
+        android:layout_above="@+id/pay_list"
+        android:background="@color/colorPrimaryDark"
+        android:text="Total Price = "
+        android:textSize="22sp"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"/>
 
 
 </RelativeLayout>

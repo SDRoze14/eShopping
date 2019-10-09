@@ -129,9 +129,6 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
                         }
                     });
                 }
-                else {
-                    Toast.makeText(ScanBarcodeCartActivity.this, "Scan QR code on cart", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 

@@ -3,14 +3,23 @@ package dev.ecommerce.eshopping;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,57 +28,72 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import dev.ecommerce.eshopping.Model.Cart;
+import dev.ecommerce.eshopping.ViewHoder.CartViewHolder;
 
 public class ListActivity extends AppCompatActivity {
 
-    private DatabaseReference ref;
-
-    private TextView listView;
-    private ArrayList<String> arrayList = new ArrayList<String>();
-    private ArrayAdapter<String> arrayAdapter;
-
-    private ValueEventListener valueEventListener;
-
-    private FirebaseListAdapter firebaseListAdapter;
-    private TextView pID, pname, price, id_cart;
-    private ImageView pimg;
-    private String puid,cart_id;
+    private RecyclerView recyclerView;
+    private  RecyclerView.LayoutManager layoutManager;
+    private Button paymants;
+    private TextView id_cart_top, total_ptice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        listView = findViewById(R.id.list_view_cart);
-        id_cart = findViewById(R.id.id_cart_list);
-        pID = findViewById(R.id.id_product_list);
+        recyclerView = findViewById(R.id.list_product);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
-        cart_id = getIntent().getStringExtra("cart");
-        if (cart_id == null) {
-            throw new IllegalArgumentException("Must pass EXTRA_POST_KEY");
-        }
+        paymants = findViewById(R.id.pay_list);
+        id_cart_top = findViewById(R.id.id_cart_list);
+        total_ptice = findViewById(R.id.list_total_price);
 
-        id_cart.setText("ID Caer : "+cart_id);
+        String cart = getIntent().getStringExtra("cart");
 
-        ref = FirebaseDatabase.getInstance().getReference().child("Cart").child(cart_id).child("product_id");
 
-        ValueEventListener eventListener = new ValueEventListener() {
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        String cart = getIntent().getStringExtra("cart");
+
+        id_cart_top.setText(cart);
+
+        final  DatabaseReference listRef = FirebaseDatabase.getInstance().getReference().child("Cart");
+
+
+        FirebaseRecyclerOptions<Cart> options =
+            new FirebaseRecyclerOptions.Builder<Cart>()
+            .setQuery(listRef.child(cart)
+                .child("product"), Cart.class)
+                .build();
+
+        FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter
+            = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Cart cart = dataSnapshot.getValue(Cart.class);
-                String p_id = cart.getProduct_id();
-
-                listView.setText(p_id);
+            protected void onBindViewHolder(CartViewHolder cartViewHolder, int i, Cart cart) {
+                cartViewHolder.txt_product_id.setText(cart.getProduct_id());
+                cartViewHolder.txt_product_name.setText(cart.getProduct_name());
+                cartViewHolder.txt_product_id.setText(cart.getProduct_price());
             }
 
+            @NonNull
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_view_cart, parent, false);
+                CartViewHolder holder = new CartViewHolder(view);
+                return holder;
             }
         };
-        ref.addValueEventListener(eventListener);
-
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
     }
 }
