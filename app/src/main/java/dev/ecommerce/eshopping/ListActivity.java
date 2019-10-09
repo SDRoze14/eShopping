@@ -53,33 +53,20 @@ public class ListActivity extends AppCompatActivity {
 
         id_cart.setText("ID Caer : "+cart_id);
 
-        ref = FirebaseDatabase.getInstance().getReference().child("Cart").child(cart_id);
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
+        ref = FirebaseDatabase.getInstance().getReference().child("Cart").child(cart_id).child("product_id");
 
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Cart cart = dataSnapshot.getValue(Cart.class);
-                listView.setText(cart.getProduct_id());
+                String p_id = cart.getProduct_id()
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        };
-        ref.addValueEventListener(eventListener);
+        }
 
-        valueEventListener = eventListener;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 }
