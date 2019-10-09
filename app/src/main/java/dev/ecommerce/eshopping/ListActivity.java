@@ -59,14 +59,17 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Cart cart = dataSnapshot.getValue(Cart.class);
-                String p_id = cart.getProduct_id()
+                String p_id = cart.getProduct_id();
+
+                listView.setText(p_id);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        }
+        };
+        ref.addValueEventListener(eventListener);
 
     }
 }
