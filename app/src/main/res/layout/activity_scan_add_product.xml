@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ScanAddProductActivity">
+
+    <SurfaceView
+        android:id="@+id/camera_add_product"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/product_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/camera_add_product"
+        android:text="Product code"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        />
+
+    <TextView
+        android:id="@+id/txt_product_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/product_code"
+        android:text="Please detect on QR code"
+        android:textSize="17sp"
+        android:textColor="#444444"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
+        android:background="@drawable/text_border"
+        android:padding="10dp"
+        />
+
+    <Button
+        android:id="@+id/confirm_code_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirm Product Code"
+        android:textSize="20dp"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"/>
+
+</RelativeLayout>
