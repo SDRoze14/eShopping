@@ -22,8 +22,8 @@ public class StoreActivity extends AppCompatActivity {
         btn_inventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(StoreActivity.this, InventoryActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(StoreActivity.this, StoreAddProductActivity.class);
+                startActivity(intent);
             }
         });
     }

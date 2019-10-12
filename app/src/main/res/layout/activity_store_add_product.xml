@@ -6,16 +6,242 @@
     android:layout_height="match_parent"
     tools:context=".StoreAddProductActivity">
 
-    <TextView
-        android:id="@+id/txt_slogan_category"
+    <RelativeLayout
+        android:id="@+id/bar_add_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:text="Add Product"
-        android:textAlignment="center"
-        android:textSize="26sp"
-        android:textStyle="bold"/>
+        android:layout_margin="20dp">
+
+        <TextView
+            android:id="@+id/close_add_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Close"
+            android:textSize="20sp"
+            android:textColor="@color/colorAccent"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:id="@+id/txt_slogan_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Product"
+            android:textAlignment="center"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/done_add_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Done"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_add_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bar_add_product">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/linear_add_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/txt_barcode"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:background="#88888888"
+                    android:text=""
+                    android:textSize="20sp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:inputType="number"
+                    android:importantForAutofill="no" />
+
+                <Button
+                    android:id="@+id/btn_scan_barcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Scan"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginLeft="10dp"/>
+            </LinearLayout>
+
+            <!--UID-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/puid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear_add_product"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+                <EditText
+                    android:id="@+id/edit_puid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="UID"
+                    android:textSize="17sp"/>
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--Product Name-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/puid"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+
+                <EditText
+                    android:id="@+id/edit_pname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Product Name"
+                    android:textSize="17sp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--Product Price-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pname"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+
+                <EditText
+                    android:id="@+id/edit_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Product Price (Bath)"
+                    android:textSize="17sp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pcateegory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/price"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+
+                <EditText
+                    android:id="@+id/edit_pcateegory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Product Category"
+                    android:textSize="17sp"
+                    android:inputType="textMultiLine"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pdescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pcateegory"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+
+                <EditText
+                    android:id="@+id/edit_pdescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Product Description"
+                    android:textSize="17sp"
+                    android:inputType="textMultiLine"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--Date & Time-->
+            <LinearLayout
+                android:id="@+id/linear_date_time_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pdescription"
+                android:orientation="horizontal"
+                android:layout_margin="20dp">
+
+                <TextView
+                    android:id="@+id/pdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date : "
+                    android:textSize="17sp"/>
+
+                <TextView
+                    android:id="@+id/txt_pdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12/10/2019"
+                    android:textSize="17sp"
+                    android:layout_marginRight="20dp"/>
+
+                <TextView
+                    android:id="@+id/ptime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time : "
+                    android:textSize="17sp"/>
+
+                <TextView
+                    android:id="@+id/txt_ptime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14:25:40"
+                    android:textSize="17sp"/>
+
+            </LinearLayout>
+
+            <!--    image -->
+            <ImageView
+                android:id="@+id/img_product"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@id/linear_date_time_product"
+                android:layout_margin="20dp"
+                android:background="#555555"
+                android:src="@drawable/ic_image_black_24dp"/>
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+
+
+
+
+
 
 </RelativeLayout>

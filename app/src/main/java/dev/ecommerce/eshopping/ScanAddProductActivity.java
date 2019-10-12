@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ public class ScanAddProductActivity extends AppCompatActivity {
     private TextView txt_product_code;
     private Button btn_confirm_pcode;
     private BarcodeDetector barcodeDetector;
+    private String pcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,7 @@ public class ScanAddProductActivity extends AppCompatActivity {
 
         barcodeDetector = new BarcodeDetector.Builder(this)
             .setBarcodeFormats(
-                Barcode.CODABAR
+                Barcode.CODE_128
             ).build();
 
         cameraSource = new CameraSource.Builder(this, barcodeDetector)
@@ -84,11 +87,22 @@ public class ScanAddProductActivity extends AppCompatActivity {
                     txt_product_code.post(new Runnable() {
                         @Override
                         public void run() {
+                            txt_product_code.setText(barcode.valueAt(0).displayValue);
+                            pcode = barcode.valueAt(0).displayValue;
 
                         }
-                    })
+                    });
                 }
 
+            }
+        });
+
+        btn_confirm_pcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ScanAddProductActivity.this, StoreAddProductActivity.class);
+                intent.putExtra("code", pcode);
+                startActivity(intent);
             }
         });
     }
