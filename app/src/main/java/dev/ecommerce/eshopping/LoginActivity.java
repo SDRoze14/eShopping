@@ -134,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                                 loadingBar.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, StoreActivity.class);
+                                Prevalent.currentOnlineUser = user;
                                 startActivity(intent);
                             }
                             else if (parentDBName.equals("Users")) {
