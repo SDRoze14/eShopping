@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import dev.ecommerce.eshopping.Model.User;
 import dev.ecommerce.eshopping.Prevalent.Prevalent;
 import io.paperdb.Paper;
 
@@ -24,7 +25,7 @@ public class StoreActivity extends AppCompatActivity {
         btn_logout = findViewById(R.id.btn_logout);
         btn_add_new_product = findViewById(R.id.btn_add_new_product);
         btn_view_product = findViewById(R.id.btn_view_product);
-        btn_view_product = findViewById(R.id.btn_scan_bill);
+        btn_scan_bill = findViewById(R.id.btn_scan_bill);
         name_use_store = findViewById(R.id.name_use_store);
 
         name_use_store.setText(Prevalent.currentOnlineUser.getName());
@@ -32,8 +33,8 @@ public class StoreActivity extends AppCompatActivity {
         btn_add_new_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(StoreActivity.this, StoreAddProductActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(StoreActivity.this, StoreAddProductActivity.class);
+                startActivity(intent1);
             }
         });
 
@@ -41,8 +42,16 @@ public class StoreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Paper.book().destroy();
-                Intent intent = new Intent(StoreActivity.this, MainActivity.class);
-                startActivity(intent);
+                Intent intent2 = new Intent(StoreActivity.this, MainActivity.class);
+                startActivity(intent2);
+            }
+        });
+
+        btn_view_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent3 = new Intent(StoreActivity.this, StoreViewListActivity.class);
+                startActivity(intent3);
             }
         });
     }

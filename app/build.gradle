@@ -49,5 +49,5 @@ dependencies {
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     implementation 'androidx.cardview:cardview:1.0.0'
 
-    implementation 'com.firebaseui:firebase-ui-database:3.1.0'
+    implementation 'com.firebaseui:firebase-ui-database:3.2.2'
 }

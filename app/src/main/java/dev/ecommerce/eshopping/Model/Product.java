@@ -2,58 +2,93 @@ package dev.ecommerce.eshopping.Model;
 
 public class Product {
 
-    private String product_name, product_uid, product_img, product_id;
-    private Float product_price;
+    private String id, name, price, description, category, image, UID, date, time;
 
-    public Product(){
+    public Product() {
 
     }
 
-    public Product (String product_name, String product_uid, Float product_price, String product_img, String product_id) {
-        this.product_name = product_name;
-        this.product_uid = product_uid;
-        this.product_price = product_price;
-        this.product_img = product_img;
-        this.product_id =product_id;
+    public Product(String id, String name, String price, String description, String category, String image, String UID, String date, String time) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.category = category;
+        this.image = image;
+        this.UID = UID;
+        this.date = date;
+        this.time = time;
     }
 
-    public String getProduct_id() {
-        return product_id;
+    public String getId() {
+        return id;
     }
 
-    public void setProduct_id(String product_id) {
-        this.product_id = product_id;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getProduct_img() {
-        return product_img;
+    public String getName() {
+        return name;
     }
 
-    public void setProduct_img(String product_img) {
-        this.product_img = product_img;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getProduct_name() {
-        return product_name;
+    public String getPrice() {
+        return price;
     }
 
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public String getProduct_uid() {
-        return product_uid;
+    public String getDescription() {
+        return description;
     }
 
-    public void setProduct_uid(String product_uid) {
-        this.product_uid = product_uid;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Float getProduct_price() {
-        return product_price;
+    public String getCategory() {
+        return category;
     }
 
-    public void setProduct_price(Float product_price) {
-        this.product_price = product_price;
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

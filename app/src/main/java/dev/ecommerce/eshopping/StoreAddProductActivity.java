@@ -97,6 +97,14 @@ public class StoreAddProductActivity extends AppCompatActivity {
             }
         });
 
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StoreAddProductActivity.this, StoreActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void AddNewProduct() {
