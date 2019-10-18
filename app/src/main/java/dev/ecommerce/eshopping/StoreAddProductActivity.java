@@ -30,10 +30,12 @@ import com.google.firebase.storage.UploadTask;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class StoreAddProductActivity extends AppCompatActivity {
 
-    private EditText editText_barcode, product_uid, product_name, product_price, product_description, product_category;
+    private EditText product_uid, product_name, product_price, product_description, product_category;
+    public static TextView editText_barcode;
     private TextView product_date, product_time, close, done;
     private ImageView product_image;
     private Button btn_scan_barcode;
@@ -54,7 +56,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_store_add_product);
 
         btn_scan_barcode =findViewById(R.id.btn_scan_barcode);
-        editText_barcode = (EditText) findViewById(R.id.txt_barcode);
+        editText_barcode = findViewById(R.id.txt_barcode);
         product_uid = findViewById(R.id.edit_puid);
         product_name = findViewById(R.id.edit_pname);
         product_price = findViewById(R.id.edit_price);
@@ -68,7 +70,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
 
         loadingBar = new ProgressDialog(this);
 
-        pcode = getIntent().getStringExtra("code");
+        pcode = getIntent().getStringExtra("pcode");
         pImgref = FirebaseStorage.getInstance().getReference().child("product image");
         pref = FirebaseDatabase.getInstance().getReference().child("Product");
 
@@ -78,8 +80,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
         btn_scan_barcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StoreAddProductActivity.this, ScanAddProductActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(), ScannerActivity.class));
             }
         });
 

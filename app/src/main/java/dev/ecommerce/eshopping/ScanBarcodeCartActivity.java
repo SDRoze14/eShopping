@@ -56,10 +56,10 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_barcode_cart);
 
-        surfaceView = findViewById(R.id.camera_preview);
-        text_code = findViewById(R.id.text_code);
-        btn_confirm_cart = findViewById(R.id.confirm_cart);
-        re_scan = findViewById(R.id.re_scan);
+//        surfaceView = findViewById(R.id.camera_preview);
+//        text_code = findViewById(R.id.text_code);
+//        btn_confirm_cart = findViewById(R.id.confirm_cart);
+//        re_scan = findViewById(R.id.re_scan);
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMddHHmmss");
