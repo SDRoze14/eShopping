@@ -97,8 +97,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="UID"
-                    android:textSize="17sp"/>
-
+                    android:textSize="17sp"
+                    android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -138,7 +138,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Product Price (Bath)"
-                    android:textSize="17sp"/>
+                    android:textSize="17sp"
+                    android:inputType="number"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -182,12 +183,33 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+<!--            amount-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pamount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pdescription"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+
+                <EditText
+                    android:id="@+id/edit_pamount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Amount"
+                    android:textSize="17sp"
+                    android:inputType="number"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <!--Date & Time-->
             <LinearLayout
                 android:id="@+id/linear_date_time_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pdescription"
+                android:layout_below="@+id/pamount"
                 android:orientation="horizontal"
                 android:layout_margin="20dp">
 
