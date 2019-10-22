@@ -67,6 +67,5 @@ public class StoreViewListActivity extends AppCompatActivity {
                 }
             };
         recyclerView.setAdapter(adapter);
-        adapter.startListening();
-    }
+        adapter.startListening();   }
 }

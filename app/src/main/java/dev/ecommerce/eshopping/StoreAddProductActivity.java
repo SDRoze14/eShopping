@@ -76,11 +76,18 @@ public class StoreAddProductActivity extends AppCompatActivity {
 
         editText_barcode.setText(pcode);
 
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
+
+        product_date.setText(date.format(calendar.getTime()));
+        product_time.setText(time.format(calendar.getTime()));
+
 
         btn_scan_barcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), ScannerActivity.class));
+                startActivity(new Intent(getApplicationContext(), ScanAddProductActivity.class));
             }
         });
 
@@ -148,12 +155,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
         loadingBar.setCanceledOnTouchOutside(false);
         loadingBar.show();
 
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
-        SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
 
-        product_date.setText(date.format(calendar.getTime()));
-        product_time.setText(time.format(calendar.getTime()));
         pdate = product_date.getText().toString();
         ptime = product_time.getText().toString();
 

@@ -56,10 +56,10 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_barcode_cart);
 
-//        surfaceView = findViewById(R.id.camera_preview);
-//        text_code = findViewById(R.id.text_code);
-//        btn_confirm_cart = findViewById(R.id.confirm_cart);
-//        re_scan = findViewById(R.id.re_scan);
+        surfaceView = findViewById(R.id.camera_preview);
+        text_code = findViewById(R.id.text_code);
+        btn_confirm_cart = findViewById(R.id.confirm_cart);
+        re_scan = findViewById(R.id.re_scan);
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -76,12 +76,12 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
         });
 
         barcodeDetector = new BarcodeDetector.Builder(this)
-                .setBarcodeFormats(
-                        Barcode.QR_CODE
-                ).build();
+            .setBarcodeFormats(
+                Barcode.QR_CODE
+            ).build();
 
         cameraSource = new CameraSource.Builder(this,barcodeDetector)
-                .setRequestedPreviewSize(640,480).setAutoFocusEnabled(true).build();
+            .setRequestedPreviewSize(640,480).setAutoFocusEnabled(true).build();
 
 
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -150,8 +150,9 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
             }
         });
 
-//
+
     }
+
 
     private void AddOrders(final String phone, final String cart, final String id, final String date) {
         final DatabaseReference ref;
@@ -168,17 +169,17 @@ public class ScanBarcodeCartActivity extends AppCompatActivity {
                     orderMap.put("date", date);
 
                     ref.child("Orders").child(id).updateChildren(orderMap)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(ScanBarcodeCartActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                                    }
-                                    else {
-                                        Toast.makeText(ScanBarcodeCartActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                                    }
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(ScanBarcodeCartActivity.this, "Success", Toast.LENGTH_SHORT).show();
                                 }
-                            });
+                                else {
+                                    Toast.makeText(ScanBarcodeCartActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                 }
             }
 
