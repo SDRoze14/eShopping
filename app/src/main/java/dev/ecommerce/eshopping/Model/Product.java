@@ -92,7 +92,6 @@ public class Product {
     public void setTime(String time) {
         this.time = time;
     }
-
     public String getAmount() {
         return amount;
     }

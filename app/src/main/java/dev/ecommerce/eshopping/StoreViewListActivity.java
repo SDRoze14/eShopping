@@ -30,7 +30,7 @@ public class StoreViewListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_view_list);
 
-        productref = FirebaseDatabase.getInstance().getReference().child("Product");
+        productref = FirebaseDatabase.getInstance().getReference().child("Product").child("powder");
 
         recyclerView = findViewById(R.id.recycleView_store);
         recyclerView.setHasFixedSize(true);

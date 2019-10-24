@@ -46,10 +46,9 @@ public class StoreAddProductActivity extends AppCompatActivity {
     private String pcode,pname,pdescription,pcategory,price,pdate,ptime,puid,pimg,pamount;
 
     private Uri uri;
+    private String myUri;
     private StorageReference pImgref;
-    private DatabaseReference pref;
 
-    private static final int GalleryPick = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +73,6 @@ public class StoreAddProductActivity extends AppCompatActivity {
 
         pcode = getIntent().getStringExtra("pcode");
         pImgref = FirebaseStorage.getInstance().getReference().child("product image");
-        pref = FirebaseDatabase.getInstance().getReference().child("Product");
 
         editText_barcode.setText(pcode);
 
@@ -152,11 +150,11 @@ public class StoreAddProductActivity extends AppCompatActivity {
             Toast.makeText(this, "Product amount is Empty.", Toast.LENGTH_SHORT).show();
         }
         else {
-            StoreProductInformation();
+            StoreProductInformation(pcode, puid, pname, price, pdescription, pcategory, pamount);
         }
     }
 
-    private void StoreProductInformation() {
+    private void StoreProductInformation(final String pcode, final String puid, final String pname, final String price, final String pdescription, final String pcategory, final String pamount) {
         loadingBar.setTitle("Add New Product");
         loadingBar.setMessage("Dear Admin, please wait while we are adding the new product.");
         loadingBar.setCanceledOnTouchOutside(false);
@@ -166,87 +164,140 @@ public class StoreAddProductActivity extends AppCompatActivity {
         pdate = product_date.getText().toString();
         ptime = product_time.getText().toString();
 
-        final StorageReference filePath = pImgref.child(uri.getLastPathSegment() + pcode + ".jpg");
+        if (uri != null) {
+            final StorageReference filePath = pImgref
+                    .child(uri.getLastPathSegment() + this.pcode + ".jpg");
 
-        final UploadTask uploadTask = filePath.putFile(uri);
+            final UploadTask uploadTask = filePath.putFile(uri);
 
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                String message = e.toString();
-                Toast.makeText(StoreAddProductActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
-                loadingBar.dismiss();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(StoreAddProductActivity.this, "Product Image uploaded Successfully...", Toast.LENGTH_SHORT).show();
-                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if (!task.isSuccessful()) {
-                            throw task.getException();
-                        }
-                        pimg = filePath.getDownloadUrl().toString();
-                        return filePath.getDownloadUrl();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        if (task.isSuccessful()) {
-                            pimg = task.getResult().toString();
-                            Toast.makeText(StoreAddProductActivity.this, "got the Product image Url Successfully...", Toast
-                                .LENGTH_SHORT).show();
-                            SaveProductInfoToDatabase();
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-
-
-    private void SaveProductInfoToDatabase() {
-
-        HashMap<String, Object> pMap = new HashMap<>();
-        pMap.put("id", pcode);
-        pMap.put("UID", puid);
-        pMap.put("name", pname);
-        pMap.put("price", price);
-        pMap.put("description", pdescription);
-        pMap.put("category", pcategory);
-        pMap.put("date", pdate);
-        pMap.put("time", ptime);
-        pMap.put("image", pimg);
-        pMap.put("amount", pamount);
-
-        pref.child(pcode).updateChildren(pMap)
-            .addOnCompleteListener(new OnCompleteListener<Void>() {
+            uploadTask.continueWithTask(new Continuation() {
                 @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        Intent intent = new Intent(StoreAddProductActivity.this, StoreActivity.class);
-                        startActivity(intent);
+                public Object then(@NonNull Task task) throws Exception {
 
-                        Toast.makeText(StoreAddProductActivity.this, "Add new Product success..", Toast.LENGTH_SHORT).show();
-                        loadingBar.dismiss();
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
                     }
-                    else {
-                        loadingBar.dismiss();
-                        String message = task.getException().toString();
-                        Toast.makeText(StoreAddProductActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
-                    }
+
+                    return filePath.getDownloadUrl();
                 }
-            });
+            })
+                    .addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful()){
+                                Uri downloadUri =  task.getResult();
+                                myUri = downloadUri.toString();
+
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Product");
+
+                                HashMap<String, Object> productMap = new HashMap<>();
+                                productMap.put("id", pcode);
+                                productMap.put("name", pname);
+                                productMap.put("uid", puid);
+                                productMap.put("price", price);
+                                productMap.put("category", pcategory);
+                                productMap.put("description", pdescription);
+                                productMap.put("amount", pamount);
+                                productMap.put("time", ptime);
+                                productMap.put("date", pdate);
+                                productMap.put("image", myUri);
+                                ref.child(StoreAddProductActivity.this.pcategory).child(StoreAddProductActivity.this.pcode).updateChildren(productMap);
+
+                                loadingBar.dismiss();
+
+                                startActivity(new Intent(StoreAddProductActivity.this, StoreViewListActivity.class));
+                                Toast.makeText(StoreAddProductActivity.this, "Add new Product success..", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                            else {
+                                loadingBar.dismiss();
+                                Toast.makeText(StoreAddProductActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }else {
+            Toast.makeText(this, "Image is not selected", Toast.LENGTH_SHORT).show();
+        }
+
+
+
+//        uploadTask.addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                String message = e.toString();
+//                Toast.makeText(StoreAddProductActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+//                loadingBar.dismiss();
+//            }
+//        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                Toast.makeText(StoreAddProductActivity.this, "Product Image uploaded Successfully...", Toast.LENGTH_SHORT).show();
+//                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+//                    @Override
+//                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+//                        if (!task.isSuccessful()) {
+//                            throw task.getException();
+//                        }
+//                        pimg = filePath.getDownloadUrl().toString();
+//                        return filePath.getDownloadUrl();
+//                    }
+//                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Uri> task) {
+//                        if (task.isSuccessful()) {
+//                            pimg = task.getResult().toString();
+//                            Toast.makeText(StoreAddProductActivity.this, "got the Product image Url Successfully...", Toast
+//                                .LENGTH_SHORT).show();
+//                            SaveProductInfoToDatabase();
+//                        }
+//                    }
+//                });
+//            }
+//        });
     }
 
-    private void OpenGallery() {
-        Intent galleryIntent = new Intent();
-        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-        galleryIntent.setType("image/*");
-        startActivityForResult(galleryIntent, GalleryPick);
-    }
+
+
+//    private void SaveProductInfoToDatabase() {
+//
+//        HashMap<String, Object> pMap = new HashMap<>();
+//        pMap.put("id", pcode);
+//        pMap.put("UID", puid);
+//        pMap.put("name", pname);
+//        pMap.put("price", price);
+//        pMap.put("description", pdescription);
+//        pMap.put("category", pcategory);
+//        pMap.put("date", pdate);
+//        pMap.put("time", ptime);
+//        pMap.put("image", pimg);
+//        pMap.put("amount", pamount);
+//
+//        pref.child(pcode).updateChildren(pMap)
+//            .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                @Override
+//                public void onComplete(@NonNull Task<Void> task) {
+//                    if (task.isSuccessful()) {
+//                        Intent intent = new Intent(StoreAddProductActivity.this, StoreActivity.class);
+//                        startActivity(intent);
+//
+//                        Toast.makeText(StoreAddProductActivity.this, "Add new Product success..", Toast.LENGTH_SHORT).show();
+//                        loadingBar.dismiss();
+//                    }
+//                    else {
+//                        loadingBar.dismiss();
+//                        String message = task.getException().toString();
+//                        Toast.makeText(StoreAddProductActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
+//    }
+//
+//    private void OpenGallery() {
+//        Intent galleryIntent = new Intent();
+//        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+//        galleryIntent.setType("image/*");
+//        startActivityForResult(galleryIntent, GalleryPick);
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
