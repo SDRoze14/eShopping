@@ -22,7 +22,8 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center">
 
             <TextView
                 android:id="@+id/id_product_list"
@@ -49,6 +50,22 @@
                 android:text="XXX Bath"
                 android:textSize="17sp"
                 android:textColor="@color/colorAccent"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
+            <TextView
+                android:id="@+id/amount_product_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textSize="17sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"/>
+
         </RelativeLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

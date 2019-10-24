@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,7 +35,7 @@ import java.util.Scanner;
 
 public class StoreAddProductActivity extends AppCompatActivity {
 
-    private EditText product_uid, product_name, product_price, product_description, product_category;
+    private EditText product_uid, product_name, product_price, product_description, product_category, product_amount;
     public static TextView editText_barcode;
     private TextView product_date, product_time, close, done;
     private ImageView product_image;
@@ -42,7 +43,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
 
     private ProgressDialog loadingBar;
 
-    private String pcode,pname,pdescription,pcategory,price,pdate,ptime,puid,pimg;
+    private String pcode,pname,pdescription,pcategory,price,pdate,ptime,puid,pimg,pamount;
 
     private Uri uri;
     private StorageReference pImgref;
@@ -67,6 +68,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
         close = findViewById(R.id.close_add_product);
         done = findViewById(R.id.done_add_product);
         product_image = findViewById(R.id.img_product);
+        product_amount = findViewById(R.id.edit_pamount);
 
         loadingBar = new ProgressDialog(this);
 
@@ -94,7 +96,9 @@ public class StoreAddProductActivity extends AppCompatActivity {
         product_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OpenGallery();
+                CropImage.activity(uri)
+                        .setAspectRatio(1,1)
+                        .start(StoreAddProductActivity.this);
             }
         });
 
@@ -122,6 +126,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
         price = product_price.getText().toString();
         pdescription = product_description.getText().toString();
         pcategory = product_category.getText().toString();
+        pamount = product_amount.getText().toString();
 
         if (uri == null) {
             Toast.makeText(this, "Product image is Empty.", Toast.LENGTH_SHORT).show();
@@ -143,6 +148,8 @@ public class StoreAddProductActivity extends AppCompatActivity {
         }
         else if (TextUtils.isEmpty(pcategory)) {
             Toast.makeText(this, "Product category is Empty.", Toast.LENGTH_SHORT).show();
+        }else if (TextUtils.isEmpty(pamount)) {
+            Toast.makeText(this, "Product amount is Empty.", Toast.LENGTH_SHORT).show();
         }
         else {
             StoreProductInformation();
@@ -198,6 +205,8 @@ public class StoreAddProductActivity extends AppCompatActivity {
         });
     }
 
+
+
     private void SaveProductInfoToDatabase() {
 
         HashMap<String, Object> pMap = new HashMap<>();
@@ -210,6 +219,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
         pMap.put("date", pdate);
         pMap.put("time", ptime);
         pMap.put("image", pimg);
+        pMap.put("amount", pamount);
 
         pref.child(pcode).updateChildren(pMap)
             .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -242,9 +252,16 @@ public class StoreAddProductActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode==GalleryPick && resultCode==RESULT_OK && data != null) {
-            uri = data.getData();
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE  && resultCode==RESULT_OK && data != null) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+            uri = result.getUri();
+
             product_image.setImageURI(uri);
+        }else {
+            Toast.makeText(this, "Error, Try Again.", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(StoreAddProductActivity.this, StoreAddProductActivity.class));
+            finish();
         }
     }
 }

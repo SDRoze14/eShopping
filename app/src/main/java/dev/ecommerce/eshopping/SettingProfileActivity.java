@@ -163,6 +163,7 @@ public class SettingProfileActivity extends AppCompatActivity {
             startActivity(new Intent(SettingProfileActivity.this, SettingProfileActivity.class));
             finish();
         }
+
     }
 
     private void userInfoSave() {
@@ -224,7 +225,7 @@ public class SettingProfileActivity extends AppCompatActivity {
 
                                 progressDialog.dismiss();
 
-                                startActivity(new Intent(SettingProfileActivity.this, MainActivity.class));
+                                startActivity(new Intent(SettingProfileActivity.this, SettingProfileActivity.class));
                                 Toast.makeText(SettingProfileActivity.this, "Profile info update successful.", Toast.LENGTH_SHORT).show();
                                 finish();
                             }else {

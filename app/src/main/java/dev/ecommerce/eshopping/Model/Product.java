@@ -2,13 +2,13 @@ package dev.ecommerce.eshopping.Model;
 
 public class Product {
 
-    private String id, name, price, description, category, image, UID, date, time;
+    private String id, name, price, description, category, image, UID, date, time, amount;
 
     public Product() {
 
     }
 
-    public Product(String id, String name, String price, String description, String category, String image, String UID, String date, String time) {
+    public Product(String id, String name, String price, String description, String category, String image, String UID, String date, String time, String amount) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -18,6 +18,7 @@ public class Product {
         this.UID = UID;
         this.date = date;
         this.time = time;
+        this.amount = amount;
     }
 
     public String getId() {
@@ -90,5 +91,13 @@ public class Product {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 }

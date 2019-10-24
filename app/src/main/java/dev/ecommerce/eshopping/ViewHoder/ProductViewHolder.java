@@ -12,7 +12,7 @@ import dev.ecommerce.eshopping.R;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView txt_pid, txt_pname, txt_price;
+    public TextView txt_pid, txt_pname, txt_price, txt_pamount;
     public ImageView img_product;
     public ItemClickListner itemClickListner;
 
@@ -23,6 +23,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder implements View.O
         txt_pid = itemView.findViewById(R.id.id_product_list);
         txt_pname = itemView.findViewById(R.id.name_product_list);
         txt_price = itemView.findViewById(R.id.price_product_list);
+        txt_pamount = itemView.findViewById(R.id.amount_product_list);
     }
 
     public void setItemClickListner(ItemClickListner itemClickListner) {

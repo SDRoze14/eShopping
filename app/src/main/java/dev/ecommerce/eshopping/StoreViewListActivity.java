@@ -54,6 +54,7 @@ public class StoreViewListActivity extends AppCompatActivity {
                     productViewHolder.txt_pid.setText(product.getId());
                     productViewHolder.txt_pname.setText(product.getName());
                     productViewHolder.txt_price.setText("Price : "+product.getPrice()+" Baht");
+                    productViewHolder.txt_pamount.setText("X"+product.getAmount());
                     Picasso.get().load(product.getImage()).into(productViewHolder.img_product);
 
                 }
