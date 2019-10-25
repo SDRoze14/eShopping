@@ -3,13 +3,24 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/txt_category"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="xxxxxxx"
-        android:textSize="25sp"
-        android:layout_margin="15dp"
-        android:padding="15dp"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="xxxxxxx"
+            android:textSize="25sp"
+            android:layout_margin="15dp"
+            android:padding="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:layout_below="@+id/txt_category"
+            android:background="#888888"/>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

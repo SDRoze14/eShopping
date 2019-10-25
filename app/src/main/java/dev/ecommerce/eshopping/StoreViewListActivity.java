@@ -24,13 +24,17 @@ public class StoreViewListActivity extends AppCompatActivity {
     private DatabaseReference productref;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    private String pcategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_view_list);
 
-        productref = FirebaseDatabase.getInstance().getReference().child("Product").child("powder");
+        pcategory = "powder"/*getIntent().getStringExtra("pcategory")*/;
+
+
+        productref = FirebaseDatabase.getInstance().getReference().child("Product").child(pcategory);
 
         recyclerView = findViewById(R.id.recycleView_store);
         recyclerView.setHasFixedSize(true);

@@ -21,11 +21,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.text.SimpleDateFormat;
@@ -33,10 +37,13 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import dev.ecommerce.eshopping.Model.Product;
+import dev.ecommerce.eshopping.Prevalent.Prevalent;
+
 public class StoreAddProductActivity extends AppCompatActivity {
 
     private EditText product_uid, product_name, product_price, product_description, product_category, product_amount;
-    public static TextView editText_barcode;
+    public static TextView editText_barcode = null;
     private TextView product_date, product_time, close, done;
     private ImageView product_image;
     private Button btn_scan_barcode;
@@ -49,6 +56,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
     private String myUri;
     private StorageReference pImgref;
 
+    private String status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +79,8 @@ public class StoreAddProductActivity extends AppCompatActivity {
 
         loadingBar = new ProgressDialog(this);
 
+        status = "0";
+
         pcode = getIntent().getStringExtra("pcode");
         pImgref = FirebaseStorage.getInstance().getReference().child("product image");
 
@@ -83,11 +93,11 @@ public class StoreAddProductActivity extends AppCompatActivity {
         product_date.setText(date.format(calendar.getTime()));
         product_time.setText(time.format(calendar.getTime()));
 
-
         btn_scan_barcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), ScanAddProductActivity.class));
+
             }
         });
 
@@ -115,6 +125,26 @@ public class StoreAddProductActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void ProductDisplay(final TextView editText_barcode, final EditText product_uid, final EditText product_name, final EditText product_price,
+                                final EditText product_description, final EditText product_category, final ImageView product_image,
+                                final EditText product_amount, String pcode) {
+
+        Toast.makeText(this, pcode, Toast.LENGTH_SHORT).show();
+
+        if (editText_barcode != null) {
+
+        }
+        else {
+            product_uid.setText(null);
+            product_name.setText(null);
+            product_price.setText(null);
+            product_description.setText(null);
+            product_category.setText(null);
+            product_amount.setText(null);
+
+        }
     }
 
     private void AddNewProduct() {
@@ -151,7 +181,17 @@ public class StoreAddProductActivity extends AppCompatActivity {
         }
         else {
             StoreProductInformation(pcode, puid, pname, price, pdescription, pcategory, pamount);
+            StoreCategoryAdd(pcode, pcategory);
         }
+    }
+
+    private void StoreCategoryAdd(String pcode, String pcategory) {
+
+        DatabaseReference category_ref = FirebaseDatabase.getInstance().getReference().child("Category");
+        HashMap<String, Object> categoryMap = new HashMap<>();
+        categoryMap.put("category", pcategory);
+
+        category_ref.child(pcategory).child(pcode).updateChildren(categoryMap);
     }
 
     private void StoreProductInformation(final String pcode, final String puid, final String pname, final String price, final String pdescription, final String pcategory, final String pamount) {
@@ -201,11 +241,14 @@ public class StoreAddProductActivity extends AppCompatActivity {
                                 productMap.put("time", ptime);
                                 productMap.put("date", pdate);
                                 productMap.put("image", myUri);
-                                ref.child(StoreAddProductActivity.this.pcategory).child(StoreAddProductActivity.this.pcode).updateChildren(productMap);
+                                ref.child(pcategory).child(pcode).updateChildren(productMap);
 
                                 loadingBar.dismiss();
 
-                                startActivity(new Intent(StoreAddProductActivity.this, StoreViewListActivity.class));
+
+                                Intent intent = new Intent(StoreAddProductActivity.this, StoreViewListActivity.class);
+                                intent.putExtra("pcategory", pcategory);
+                                startActivity(intent);
                                 Toast.makeText(StoreAddProductActivity.this, "Add new Product success..", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
