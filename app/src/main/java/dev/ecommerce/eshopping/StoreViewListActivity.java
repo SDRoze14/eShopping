@@ -31,7 +31,7 @@ public class StoreViewListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_view_list);
 
-        pcategory = "powder"/*getIntent().getStringExtra("pcategory")*/;
+        pcategory = getIntent().getStringExtra("pcategory");
 
 
         productref = FirebaseDatabase.getInstance().getReference().child("Product").child(pcategory);

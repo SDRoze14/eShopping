@@ -181,17 +181,17 @@ public class StoreAddProductActivity extends AppCompatActivity {
         }
         else {
             StoreProductInformation(pcode, puid, pname, price, pdescription, pcategory, pamount);
-            StoreCategoryAdd(pcode, pcategory);
+            StoreCategoryAdd(pcategory);
         }
     }
 
-    private void StoreCategoryAdd(String pcode, String pcategory) {
+    private void StoreCategoryAdd( String pcategory) {
 
         DatabaseReference category_ref = FirebaseDatabase.getInstance().getReference().child("Category");
         HashMap<String, Object> categoryMap = new HashMap<>();
         categoryMap.put("category", pcategory);
 
-        category_ref.child(pcategory).child(pcode).updateChildren(categoryMap);
+        category_ref.child(pcategory).updateChildren(categoryMap);
     }
 
     private void StoreProductInformation(final String pcode, final String puid, final String pname, final String price, final String pdescription, final String pcategory, final String pamount) {
