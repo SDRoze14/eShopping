@@ -1,12 +1,16 @@
 package dev.ecommerce.eshopping;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
@@ -27,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.Result;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -38,156 +43,134 @@ import java.util.TimeZone;
 
 import dev.ecommerce.eshopping.Model.Order;
 import dev.ecommerce.eshopping.Prevalent.Prevalent;
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class ScanBarcodeCartActivity extends AppCompatActivity {
+import static android.Manifest.permission.CAMERA;
 
-    private SurfaceView surfaceView;
-    private CameraSource cameraSource;
-    private TextView text_code,re_scan;
-    private Button btn_confirm_cart;
-    private BarcodeDetector barcodeDetector;
+public class ScanBarcodeCartActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 
-    private String id_order;
-    private String phone;
-    private String cart,dateid,date;
+//    private SurfaceView surfaceView;
+//    private CameraSource cameraSource;
+//    private TextView text_code,re_scan;
+//    private Button btn_confirm_cart;
+//    private BarcodeDetector barcodeDetector;
+//
+//    private String id_order;
+//    private String phone;
+//    private String cart,dateid,date;
+    
+    private static final int REQUEST_CAMERA = 1;
+    private ZXingScannerView scannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan_barcode_cart);
+        scannerView = new ZXingScannerView(this);
+        setContentView(scannerView);
 
-        surfaceView = findViewById(R.id.camera_preview);
-        text_code = findViewById(R.id.text_code);
-        btn_confirm_cart = findViewById(R.id.confirm_cart);
-        re_scan = findViewById(R.id.re_scan);
-
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMddHHmmss");
-        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        dateid = dateFormat1.format(calendar.getTime());
-        date = dateFormat2.format(calendar.getTime());
-
-        re_scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                text_code.setText(null);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkPermission()) {
+                Toast.makeText(this, "Permission is granted", Toast.LENGTH_SHORT).show();
+            }else {
+                requestPermissions();
             }
-        });
-
-        barcodeDetector = new BarcodeDetector.Builder(this)
-            .setBarcodeFormats(
-                Barcode.QR_CODE
-            ).build();
-
-        cameraSource = new CameraSource.Builder(this,barcodeDetector)
-            .setRequestedPreviewSize(640,480).setAutoFocusEnabled(true).build();
-
-
-        surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-                try {
-                    cameraSource.start(holder);
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                cameraSource.stop();
-            }
-        });
-
-        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
-            @Override
-            public void release() {
-
-            }
-
-            @Override
-            public void receiveDetections(Detector.Detections<Barcode> detections) {
-                final SparseArray<Barcode> qrcode = detections.getDetectedItems();
-
-                if (qrcode.size() != 0) {
-                    text_code.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            text_code.setText(qrcode.valueAt(0).displayValue);
-                            cart = qrcode.valueAt(0).displayValue;
-
-                            id_order = Prevalent.currentOnlineUser.getPhone()+qrcode.valueAt(0).displayValue+dateid;
-                        }
-                    });
-                }
-            }
-        });
-
-        phone = Prevalent.currentOnlineUser.getPhone();
-
-
-        btn_confirm_cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (text_code == null) {
-                    Toast.makeText(ScanBarcodeCartActivity.this, "Scan QR code on cart.", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Intent intent = new Intent(ScanBarcodeCartActivity.this, ListActivity.class);
-                    intent.putExtra("cart", cart);
-                    startActivity(intent);
-                    AddOrders(phone, cart, id_order,date);
-                }
-            }
-        });
-
-
+        }
     }
 
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this, new String[]{CAMERA}, REQUEST_CAMERA);
+    }
 
-    private void AddOrders(final String phone, final String cart, final String id, final String date) {
-        final DatabaseReference ref;
-        ref = FirebaseDatabase.getInstance().getReference();
+    private boolean checkPermission() {
+        return (ContextCompat.checkSelfPermission(ScanBarcodeCartActivity.this, CAMERA) == PackageManager.PERMISSION_GRANTED);
+    }
 
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!(dataSnapshot.child("Orders").child(id).exists())) {
-                    HashMap<String, Object> orderMap = new HashMap<>();
-                    orderMap.put("id_order", id);
-                    orderMap.put("phone", phone);
-                    orderMap.put("cart_id", cart);
-                    orderMap.put("date", date);
-
-                    ref.child("Orders").child(id).updateChildren(orderMap)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(ScanBarcodeCartActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                                }
-                                else {
-                                    Toast.makeText(ScanBarcodeCartActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                                }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case REQUEST_CAMERA:
+                if (grantResults.length > 0) {
+                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    if (cameraAccepted) {
+                        Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (shouldShowRequestPermissionRationale(CAMERA)) {
+                                dispalyAlertMessage("You need to allow access for both permission",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                    requestPermissions(new String[]{CAMERA}, REQUEST_CAMERA);
+                                                }
+                                            }
+                                        });
+                                return;
                             }
-                        });
+                        }
+                    }
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+                break;
+        }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkPermission()) {
+                if (scannerView == null) {
+                    scannerView = new ZXingScannerView(this);
+                    setContentView(scannerView);
+                }
+                scannerView.setResultHandler(this);
+                scannerView.startCamera();
+            }else {
+                requestPermissions();
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        scannerView.stopCamera();
+    }
+
+    public void dispalyAlertMessage(String message, DialogInterface.OnClickListener listener) {
+        new AlertDialog.Builder(ScanBarcodeCartActivity.this)
+                .setMessage(message)
+                .setPositiveButton("OK", listener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+
+    }
+
+    @Override
+    public void handleResult(Result result) {
+        final String scan_result = result.getText();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Cart ID");
+        builder.setPositiveButton("Confirm Cart", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(ScanBarcodeCartActivity.this, ListActivity.class);
+                intent.putExtra("cart_id", scan_result);
+                startActivity(intent);
+            }
+        });
+        builder.setNeutralButton("Rescan", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                scannerView.resumeCameraPreview(ScanBarcodeCartActivity.this);
+            }
+        });
+        builder.setMessage(scan_result);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        }
 }

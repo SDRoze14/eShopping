@@ -36,9 +36,11 @@ import dev.ecommerce.eshopping.ViewHoder.CartViewHolder;
 public class ListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private  RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.LayoutManager layoutManager;
     private Button paymants;
     private TextView id_cart_top, total_ptice;
+
+    private DatabaseReference listref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,10 @@ public class ListActivity extends AppCompatActivity {
         id_cart_top = findViewById(R.id.id_cart_list);
         total_ptice = findViewById(R.id.list_total_price);
 
-        String cart = getIntent().getStringExtra("cart");
+        String cart = getIntent().getStringExtra("cart_id");
+        id_cart_top.setText(cart);
 
+        listref = FirebaseDatabase.getInstance().getReference().child("Cart").child(cart).child("88500070102410");
 
     }
 
@@ -63,17 +67,11 @@ public class ListActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        String cart = getIntent().getStringExtra("cart");
-
-        id_cart_top.setText(cart);
-
-        final  DatabaseReference listRef = FirebaseDatabase.getInstance().getReference().child("Cart");
 
 
         FirebaseRecyclerOptions<Cart> options =
             new FirebaseRecyclerOptions.Builder<Cart>()
-            .setQuery(listRef.child(cart)
-                .child("product"), Cart.class)
+            .setQuery(listref, Cart.class)
                 .build();
 
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter
