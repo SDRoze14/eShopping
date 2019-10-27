@@ -27,4 +27,21 @@
 
     <string name="nav_setting">Setting</string>
 
+    <string-array name = "spinner_category">
+        <item>Category...</item>
+        <item>Veggies and fruits</item>
+        <item>Meat</item>
+        <item>Fish and seafood</item>
+        <item>Butter, milk and eggs</item>
+        <item>Instant food</item>
+        <item>Drink and snack</item>
+        <item>Equipment and Household</item>
+        <item>Stationery and office equipment</item>
+        <item>Electronics</item>
+        <item>Health and beauty</item>
+        <item>Mom and baby</item>
+        <item>Pet products</item>
+        <item>Spices and seasonings</item>
+    </string-array>
+
 </resources>

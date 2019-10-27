@@ -10,9 +10,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,11 +45,12 @@ import dev.ecommerce.eshopping.Prevalent.Prevalent;
 
 public class StoreAddProductActivity extends AppCompatActivity {
 
-    private EditText product_uid, product_name, product_price, product_description, product_category, product_amount;
+    private EditText product_uid, product_name, product_price, product_description, product_amount;
     public static TextView editText_barcode = null;
     private TextView product_date, product_time, close, done;
     private ImageView product_image;
     private Button btn_scan_barcode;
+    private Spinner spinner_pcategory;
 
     private ProgressDialog loadingBar;
 
@@ -69,30 +73,51 @@ public class StoreAddProductActivity extends AppCompatActivity {
         product_name = findViewById(R.id.edit_pname);
         product_price = findViewById(R.id.edit_price);
         product_description = findViewById(R.id.edit_pdescription);
-        product_category = findViewById(R.id.edit_pcateegory);
         product_date = findViewById(R.id.txt_pdate);
         product_time = findViewById(R.id.txt_ptime);
         close = findViewById(R.id.close_add_product);
         done = findViewById(R.id.done_add_product);
         product_image = findViewById(R.id.img_product);
         product_amount = findViewById(R.id.edit_pamount);
+        spinner_pcategory = findViewById(R.id.spinner_pcategory);
+        //set spinner-------------------------------------------------------------------------
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(StoreAddProductActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.spinner_category));
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_pcategory.setAdapter(adapter);
+
+        spinner_pcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String category = spinner_pcategory.getSelectedItem().toString();
+                Toast.makeText(StoreAddProductActivity.this, category, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //------------------------------------------------------------------------------------
 
         loadingBar = new ProgressDialog(this);
 
-        status = "0";
-
-        pcode = getIntent().getStringExtra("pcode");
         pImgref = FirebaseStorage.getInstance().getReference().child("product image");
 
+        pcode = getIntent().getStringExtra("pcode");
         editText_barcode.setText(pcode);
 
+        //date and time-------------------------------------------------------------------------------
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
         SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
 
         product_date.setText(date.format(calendar.getTime()));
         product_time.setText(time.format(calendar.getTime()));
+        //---------------------------------------------------------------------------------------------
 
+        //btn scan go to scan barcode activity--------------------------------------------------------
         btn_scan_barcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +125,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
 
             }
         });
+        //-------------------------------------------------------------------------------------------
 
         product_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,33 +153,14 @@ public class StoreAddProductActivity extends AppCompatActivity {
 
     }
 
-    private void ProductDisplay(final TextView editText_barcode, final EditText product_uid, final EditText product_name, final EditText product_price,
-                                final EditText product_description, final EditText product_category, final ImageView product_image,
-                                final EditText product_amount, String pcode) {
-
-        Toast.makeText(this, pcode, Toast.LENGTH_SHORT).show();
-
-        if (editText_barcode != null) {
-
-        }
-        else {
-            product_uid.setText(null);
-            product_name.setText(null);
-            product_price.setText(null);
-            product_description.setText(null);
-            product_category.setText(null);
-            product_amount.setText(null);
-
-        }
-    }
-
+    //set edit text to string ----------------------------------------------------------------------------
     private void AddNewProduct() {
         pcode = editText_barcode.getText().toString();
         puid = product_uid.getText().toString();
         pname = product_name.getText().toString();
         price = product_price.getText().toString();
         pdescription = product_description.getText().toString();
-        pcategory = product_category.getText().toString();
+        pcategory = spinner_pcategory.getSelectedItem().toString();
         pamount = product_amount.getText().toString();
 
         if (uri == null) {
@@ -175,7 +182,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
             Toast.makeText(this, "Product description is Empty.", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(pcategory)) {
-            Toast.makeText(this, "Product category is Empty.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Select product category.", Toast.LENGTH_SHORT).show();
         }else if (TextUtils.isEmpty(pamount)) {
             Toast.makeText(this, "Product amount is Empty.", Toast.LENGTH_SHORT).show();
         }
@@ -185,6 +192,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
         }
     }
 
+    // add category to category database------------------------------------------------------------------
     private void StoreCategoryAdd( String pcategory) {
 
         DatabaseReference category_ref = FirebaseDatabase.getInstance().getReference().child("Category");
@@ -194,6 +202,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
         category_ref.child(pcategory).updateChildren(categoryMap);
     }
 
+    // add data to product database;
     private void StoreProductInformation(final String pcode, final String puid, final String pname, final String price, final String pdescription, final String pcategory, final String pamount) {
         loadingBar.setTitle("Add New Product");
         loadingBar.setMessage("Dear Admin, please wait while we are adding the new product.");
@@ -262,86 +271,9 @@ public class StoreAddProductActivity extends AppCompatActivity {
             Toast.makeText(this, "Image is not selected", Toast.LENGTH_SHORT).show();
         }
 
-
-
-//        uploadTask.addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                String message = e.toString();
-//                Toast.makeText(StoreAddProductActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
-//                loadingBar.dismiss();
-//            }
-//        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Toast.makeText(StoreAddProductActivity.this, "Product Image uploaded Successfully...", Toast.LENGTH_SHORT).show();
-//                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-//                    @Override
-//                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-//                        if (!task.isSuccessful()) {
-//                            throw task.getException();
-//                        }
-//                        pimg = filePath.getDownloadUrl().toString();
-//                        return filePath.getDownloadUrl();
-//                    }
-//                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Uri> task) {
-//                        if (task.isSuccessful()) {
-//                            pimg = task.getResult().toString();
-//                            Toast.makeText(StoreAddProductActivity.this, "got the Product image Url Successfully...", Toast
-//                                .LENGTH_SHORT).show();
-//                            SaveProductInfoToDatabase();
-//                        }
-//                    }
-//                });
-//            }
-//        });
     }
 
-
-
-//    private void SaveProductInfoToDatabase() {
-//
-//        HashMap<String, Object> pMap = new HashMap<>();
-//        pMap.put("id", pcode);
-//        pMap.put("UID", puid);
-//        pMap.put("name", pname);
-//        pMap.put("price", price);
-//        pMap.put("description", pdescription);
-//        pMap.put("category", pcategory);
-//        pMap.put("date", pdate);
-//        pMap.put("time", ptime);
-//        pMap.put("image", pimg);
-//        pMap.put("amount", pamount);
-//
-//        pref.child(pcode).updateChildren(pMap)
-//            .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Void> task) {
-//                    if (task.isSuccessful()) {
-//                        Intent intent = new Intent(StoreAddProductActivity.this, StoreActivity.class);
-//                        startActivity(intent);
-//
-//                        Toast.makeText(StoreAddProductActivity.this, "Add new Product success..", Toast.LENGTH_SHORT).show();
-//                        loadingBar.dismiss();
-//                    }
-//                    else {
-//                        loadingBar.dismiss();
-//                        String message = task.getException().toString();
-//                        Toast.makeText(StoreAddProductActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            });
-//    }
-//
-//    private void OpenGallery() {
-//        Intent galleryIntent = new Intent();
-//        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-//        galleryIntent.setType("image/*");
-//        startActivityForResult(galleryIntent, GalleryPick);
-//    }
-
+    //crop image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -350,7 +282,6 @@ public class StoreAddProductActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
             uri = result.getUri();
-
             product_image.setImageURI(uri);
         }else {
             Toast.makeText(this, "Error, Try Again.", Toast.LENGTH_SHORT).show();

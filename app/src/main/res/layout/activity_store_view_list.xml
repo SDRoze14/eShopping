@@ -6,10 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".StoreViewListActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_product_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/product_list_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_arrow_back_24dp"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/shadow_top"
+        android:layout_below="@id/toolbar_product_list"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView_store"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_product_list"
         android:scrollbars="vertical">
 
 

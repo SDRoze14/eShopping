@@ -143,31 +143,21 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/pcateegory"
+            <Spinner
+                android:id="@+id/spinner_pcategory"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_below="@id/price"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp" />
 
-
-                <EditText
-                    android:id="@+id/edit_pcateegory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Product Category"
-                    android:textSize="17sp"
-                    android:inputType="textMultiLine"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/pdescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/pcateegory"
+                android:layout_below="@id/spinner_pcategory"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp">

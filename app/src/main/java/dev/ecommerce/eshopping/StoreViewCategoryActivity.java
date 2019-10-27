@@ -42,6 +42,14 @@ public class StoreViewCategoryActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         back = findViewById(R.id.back_list_category);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StoreViewCategoryActivity.this, StoreActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
