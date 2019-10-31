@@ -17,10 +17,11 @@
             android:id="@+id/id_cart_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cart ID : Cart001"
+            android:text="รหัสรถเข็น : Cart001"
             android:textSize="20sp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/prompt_medium"/>
 
         <ImageView
             android:id="@+id/close_list"
@@ -47,10 +48,11 @@
         android:layout_alignParentBottom="true"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:text="Payments"
-        android:textSize="20dp"
+        android:text="ชำระเงิน"
+        android:textSize="20sp"
         android:textAllCaps="false"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/colorPrimary"
+        android:fontFamily="@font/prompt_medium"/>
 
     <TextView
         android:id="@+id/list_total_price"
@@ -58,12 +60,13 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/pay_list"
         android:background="@color/colorPrimaryDark"
-        android:text="Total Price = "
+        android:text="ราคาทั้งหมด = "
         android:textSize="22sp"
         android:textColor="@android:color/white"
         android:gravity="center"
         android:paddingTop="5dp"
-        android:paddingBottom="10dp"/>
+        android:paddingBottom="10dp"
+        android:fontFamily="@font/prompt_medium"/>
 
 
 </RelativeLayout>

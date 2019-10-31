@@ -59,7 +59,7 @@ public class ListActivity extends AppCompatActivity {
         String cart = getIntent().getStringExtra("cart_id");
         id_cart_top.setText(cart);
 
-        listref = FirebaseDatabase.getInstance().getReference().child("Cart").child(cart).child("88500070102410");
+        listref = FirebaseDatabase.getInstance().getReference().child("Cart").child(cart);
 
     }
 
@@ -81,6 +81,10 @@ public class ListActivity extends AppCompatActivity {
                 cartViewHolder.txt_product_id.setText(cart.getProduct_id());
                 cartViewHolder.txt_product_name.setText(cart.getProduct_name());
                 cartViewHolder.txt_product_id.setText(cart.getProduct_price());
+
+                String price = cart.getProduct_price();
+                total_ptice.setText(price);
+
             }
 
             @NonNull

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/athiti_extralight</item>
+        <item>@font/itim</item>
+        <item>@font/prompt</item>
+        <item>@font/prompt_bold</item>
+        <item>@font/prompt_extralight</item>
+        <item>@font/prompt_medium</item>
+        <item>@font/prompt_thin</item>
+        <item>@font/sriracha</item>
+        <item>@font/titan_one</item>
+    </array>
+</resources>
