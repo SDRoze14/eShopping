@@ -61,8 +61,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         }else if (id==R.id.bt_money) {
 
-        }else if (id==R.id.bt_ck_stock) {
-
         }else if (id==R.id.bt_menu) {
 
             PopupMenu popupMenu = new PopupMenu(HomeActivity.this, findViewById(R.id.bt_menu));

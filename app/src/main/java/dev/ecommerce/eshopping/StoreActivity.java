@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import dev.ecommerce.eshopping.Model.User;
 import dev.ecommerce.eshopping.Prevalent.Prevalent;
@@ -14,7 +16,7 @@ import io.paperdb.Paper;
 
 public class StoreActivity extends AppCompatActivity {
 
-    private Button btn_logout, btn_add_new_product, btn_view_product, btn_scan_bill;
+    private LinearLayout btn_logout, btn_add_new_product, btn_view_product, btn_scan_bill;
     private TextView name_use_store;
 
     @Override
@@ -52,6 +54,13 @@ public class StoreActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent3 = new Intent(StoreActivity.this, StoreViewCategoryActivity.class);
                 startActivity(intent3);
+            }
+        });
+
+        btn_scan_bill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(StoreActivity.this, "Scan bill", Toast.LENGTH_SHORT).show();
             }
         });
     }

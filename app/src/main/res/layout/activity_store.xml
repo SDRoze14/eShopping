@@ -14,70 +14,178 @@
         android:layout_margin="15dp"
         android:gravity="center"/>
 
-    <RelativeLayout
-        android:id="@+id/ralat_1"
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
         android:layout_below="@+id/name_use_store"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="38dp"
-        android:layout_marginLeft="38dp">
+        android:layout_centerHorizontal="true">
 
-        <Button
+        <LinearLayout
             android:id="@+id/btn_add_new_product"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_alignParentLeft="true"
-            android:text="Add new \nproduct"
-            android:textAllCaps="false"
-            android:textSize="17sp"
-            android:background="#00BCD4"/>
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:background="#2196F3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_margin="20dp">
 
-        <Button
-            android:id="@+id/btn_view_product"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_alignParentRight="true"
-            android:text="View lise \nproduct"
-            android:textAllCaps="false"
-            android:textSize="17sp"
-            android:background="#FFEB3B"/>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_add_black_24dp"/>
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="เพิ่มสินค้าใหม่"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/prompt_medium"/>
 
-    <RelativeLayout
-        android:id="@+id/ralat_2"
-        android:layout_below="@+id/ralat_1"
-        android:layout_width="match_parent"
+        </LinearLayout>
+
+        <LinearLayout
+        android:id="@+id/btn_view_product"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:background="#FF5722"
         android:gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="38dp"
-        android:layout_marginLeft="38dp">
+        android:padding="10dp"
+        android:layout_margin="20dp">
 
-        <Button
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_format_list_bulleted_black_24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="รายการสินค้า"
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+                android:fontFamily="@font/prompt_medium"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/btn_scan_bill"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_alignParentLeft="true"
-            android:text="Scan bill"
-            android:textAllCaps="false"
-            android:textSize="17sp"
-            android:background="#FF5722"/>
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:background="#4CAF50"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_margin="20dp">
 
-        <Button
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_fullscreen_black_24dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="สแกนใบเสร็จ"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/prompt_medium"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/btn_logout"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_alignParentRight="true"
-            android:text="Logout"
-            android:textAllCaps="true"
-            android:textSize="17sp"
-            android:background="#FF0000"/>
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:background="#FF0000"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_margin="20dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_power_settings_new_black_24dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ออกจากระบบ"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/prompt_medium"/>
+
+        </LinearLayout>
+    </GridLayout>
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/ralat_1"-->
+<!--        android:layout_below="@+id/name_use_store"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_marginRight="38dp"-->
+<!--        android:layout_marginLeft="38dp">-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btn_add_new_product"-->
+<!--            android:layout_width="120dp"-->
+<!--            android:layout_height="120dp"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:text="Add new \nproduct"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textSize="17sp"-->
+<!--            android:background="#00BCD4"/>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btn_view_product"-->
+<!--            android:layout_width="120dp"-->
+<!--            android:layout_height="120dp"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:text="View lise \nproduct"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textSize="17sp"-->
+<!--            android:background="#FFEB3B"/>-->
+
+<!--    </RelativeLayout>-->
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/ralat_2"-->
+<!--        android:layout_below="@+id/ralat_1"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_marginRight="38dp"-->
+<!--        android:layout_marginLeft="38dp">-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btn_scan_bill"-->
+<!--            android:layout_width="120dp"-->
+<!--            android:layout_height="120dp"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:text="Scan bill"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textSize="17sp"-->
+<!--            android:background="#FF5722"/>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btn_logout"-->
+<!--            android:layout_width="120dp"-->
+<!--            android:layout_height="120dp"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:text="Logout"-->
+<!--            android:textAllCaps="true"-->
+<!--            android:textSize="17sp"-->
+<!--            android:background="#FF0000"/>-->
 
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
 <!--    <Button-->
 <!--        android:id="@+id/logout_store"-->

@@ -5,17 +5,13 @@
     <item
         android:id="@+id/bt_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/nav_home" />
+        android:title="หน้าแรก" />
     <item
         android:id="@+id/bt_money"
         android:icon="@drawable/ic_attach_money_black_24dp"
-        android:title="@string/nav_money" />
-    <item
-        android:id="@+id/bt_ck_stock"
-        android:icon="@drawable/ic_search"
-        android:title="@string/nav_ckstock" />
+        android:title="เงิน"/>
     <item
         android:id="@+id/bt_menu"
         android:icon="@drawable/ic_menu"
-        android:title="@string/nav_menu" />
+        android:title="เมนู" />
 </menu>
