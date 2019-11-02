@@ -28,9 +28,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import dev.ecommerce.eshopping.Model.Cart;
+import dev.ecommerce.eshopping.Model.Product;
 import dev.ecommerce.eshopping.ViewHoder.CartViewHolder;
 
 public class ListActivity extends AppCompatActivity {
@@ -41,6 +43,8 @@ public class ListActivity extends AppCompatActivity {
     private TextView id_cart_top, total_ptice;
 
     private DatabaseReference listref;
+
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +81,17 @@ public class ListActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter
             = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(CartViewHolder cartViewHolder, int i, Cart cart) {
+            protected void onBindViewHolder(final CartViewHolder cartViewHolder, int i, Cart cart) {
                 cartViewHolder.txt_product_id.setText(cart.getProduct_id());
-                cartViewHolder.txt_product_name.setText(cart.getProduct_name());
+
+                id = cart.getProduct_id();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Product").child(id);
+
+                ValueEventListener eventListener
+                /* cartViewHolder.txt_product_name.setText(cart.getProduct_name());
                 cartViewHolder.txt_product_id.setText(cart.getProduct_price());
 
-                String price = cart.getProduct_price();
-                total_ptice.setText(price);
+                */
 
             }
 
@@ -97,5 +105,6 @@ public class ListActivity extends AppCompatActivity {
         };
         recyclerView.setAdapter(adapter);
         adapter.startListening();
+
     }
 }

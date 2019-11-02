@@ -38,7 +38,7 @@ public class StoreViewListActivity extends AppCompatActivity {
         pcategory = getIntent().getStringExtra("pcategory");
 
 
-        productref = FirebaseDatabase.getInstance().getReference().child("Product").child(pcategory);
+        productref = FirebaseDatabase.getInstance().getReference().child("Product");
 
         recyclerView = findViewById(R.id.recycleView_store);
         recyclerView.setHasFixedSize(true);
@@ -66,32 +66,36 @@ public class StoreViewListActivity extends AppCompatActivity {
             .build();
 
         FirebaseRecyclerAdapter<Product, ProductViewHolder> adapter =
-            new FirebaseRecyclerAdapter<Product, ProductViewHolder>(options) {
-                @Override
-                protected void onBindViewHolder(@NonNull ProductViewHolder productViewHolder, int i, @NonNull Product product) {
-                    productViewHolder.txt_pid.setText(product.getId());
-                    productViewHolder.txt_pname.setText(product.getName());
-                    productViewHolder.txt_price.setText("ราคา : "+product.getPrice()+" บาท");
-                    productViewHolder.txt_pamount.setText("X"+product.getAmount());
-                    Picasso.get().load(product.getImage()).into(productViewHolder.img_product);
+                new FirebaseRecyclerAdapter<Product, ProductViewHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull ProductViewHolder productViewHolder, int i, @NonNull Product product) {
+                        productViewHolder.txt_pid.setText(product.getId());
+                        productViewHolder.txt_pname.setText(product.getName());
+                        productViewHolder.txt_price.setText("ราคา : "+product.getPrice()+" บาท");
+                        productViewHolder.txt_pamount.setText("X"+product.getAmount());
+                        Picasso.get().load(product.getImage()).into(productViewHolder.img_product);
 
-                }
+                    }
 
-                @NonNull
-                @Override
-                public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_view_cart, parent, false);
-                    ProductViewHolder holder = new ProductViewHolder(view);
+                    @NonNull
+                    @Override
+                    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_view_cart, parent, false);
+                        ProductViewHolder holder = new ProductViewHolder(view);
 
-                    view.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // Test--------------------------------------------------------------
-                        }
-                    });
-                    return holder;
-                }
-            };
+                        view.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // Test--------------------------------------------------------------
+                            }
+                        });
+                        return holder;
+                    }
+                };
         recyclerView.setAdapter(adapter);
-        adapter.startListening();   }
+        adapter.startListening();
+        }
+
+
+
 }

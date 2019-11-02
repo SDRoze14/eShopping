@@ -91,7 +91,12 @@ public class StoreAddProductActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String category = spinner_pcategory.getSelectedItem().toString();
-                Toast.makeText(StoreAddProductActivity.this, category, Toast.LENGTH_SHORT).show();
+                if (category.equals("กรุณาเลือกประเภทสินค้า")) {
+
+                }else {
+                    Toast.makeText(StoreAddProductActivity.this, category, Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
@@ -181,7 +186,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
         else if (TextUtils.isEmpty(pdescription)) {
             Toast.makeText(this, "กรุณากรอกรายละเอียดสินค้า", Toast.LENGTH_SHORT).show();
         }
-        else if (pcategory == "ประเภทสินค้า...") {
+        else if (pcategory == "กรุณาเลือกประเภทสินค้า") {
             Toast.makeText(this, "กรุณาเลือกประเภทสินค้า", Toast.LENGTH_SHORT).show();
         }else if (TextUtils.isEmpty(pamount)) {
             Toast.makeText(this, "กรุณาใส่จำนวนสินค้า", Toast.LENGTH_SHORT).show();
@@ -250,7 +255,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
                                 productMap.put("time", ptime);
                                 productMap.put("date", pdate);
                                 productMap.put("image", myUri);
-                                ref.child(pcategory).child(pcode).updateChildren(productMap);
+                                ref.child(pcode).updateChildren(productMap);
 
                                 loadingBar.dismiss();
 

@@ -28,7 +28,7 @@
     <string name="nav_setting">ตั้งค่าบัญชี</string>
 
     <string-array name = "spinner_category">
-        <item>ประเภทสินค้า...</item>
+        <item>กรุณาเลือกประเภทสินค้า</item>
         <item>ผักและผลไม้</item>
         <item>เนื้อสัตว์</item>
         <item>ปลาและอาหารทะเล</item>
