@@ -126,7 +126,7 @@ public class SettingProfileActivity extends AppCompatActivity {
     private void updateOnlyUserInfo() {
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Update profile");
+        progressDialog.setTitle("แก้ไขบัญชี");
         progressDialog.setMessage("Please wait, while we are updating your account information");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -144,7 +144,7 @@ public class SettingProfileActivity extends AppCompatActivity {
         progressDialog.dismiss();
 
         startActivity(new Intent(SettingProfileActivity.this, MainActivity.class));
-        Toast.makeText(SettingProfileActivity.this, "Profile info update successful.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(SettingProfileActivity.this, "แก้ไขบัญชีส่วนตัวสำเร็จ", Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -158,7 +158,7 @@ public class SettingProfileActivity extends AppCompatActivity {
 
             imageProfileSetting.setImageURI(imageUri);
         }else {
-            Toast.makeText(this, "Error, Try Again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error, ลองอีกครั้ง", Toast.LENGTH_SHORT).show();
 
             startActivity(new Intent(SettingProfileActivity.this, SettingProfileActivity.class));
             finish();
@@ -182,7 +182,7 @@ public class SettingProfileActivity extends AppCompatActivity {
 
     private void uploadImage() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Update profile");
+        progressDialog.setTitle("แก้ไขบัญชี");
         progressDialog.setMessage("Please wait, while we are updating your account information");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -226,7 +226,7 @@ public class SettingProfileActivity extends AppCompatActivity {
                                 progressDialog.dismiss();
 
                                 startActivity(new Intent(SettingProfileActivity.this, SettingProfileActivity.class));
-                                Toast.makeText(SettingProfileActivity.this, "Profile info update successful.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SettingProfileActivity.this, "แก้ไขบัญชีส่วนตัวสำเร็จ", Toast.LENGTH_SHORT).show();
                                 finish();
                             }else {
                                 progressDialog.dismiss();
@@ -235,7 +235,7 @@ public class SettingProfileActivity extends AppCompatActivity {
                         }
                     });
         }else {
-            Toast.makeText(this, "Image is not selected.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "รูปโปรไฟล์ไม่ได้เลือก", Toast.LENGTH_SHORT).show();
         }
     }
 

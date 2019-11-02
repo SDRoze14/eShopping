@@ -155,7 +155,7 @@ public class ScanBarcodeCartActivity extends AppCompatActivity implements ZXingS
         final String scan_result = result.getText();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Cart ID");
-        builder.setPositiveButton("Confirm Cart", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("ยืนยันรถเข็น", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(ScanBarcodeCartActivity.this, ListActivity.class);
@@ -163,7 +163,7 @@ public class ScanBarcodeCartActivity extends AppCompatActivity implements ZXingS
                 startActivity(intent);
             }
         });
-        builder.setNeutralButton("Rescan", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("สแกนอีกครั้ง", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 scannerView.resumeCameraPreview(ScanBarcodeCartActivity.this);

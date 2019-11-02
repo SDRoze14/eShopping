@@ -134,7 +134,7 @@ public class ScanAddProductActivity extends AppCompatActivity implements ZXingSc
         final String scan_result = result.getText();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Scan result");
-        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("บันทึก", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(ScanAddProductActivity.this, StoreAddProductActivity.class);
@@ -142,7 +142,7 @@ public class ScanAddProductActivity extends AppCompatActivity implements ZXingSc
                 startActivity(intent);
             }
         });
-        builder.setNeutralButton("Rescan", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("สแกนอีกครั้ง", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 scannerView.resumeCameraPreview(ScanAddProductActivity.this);

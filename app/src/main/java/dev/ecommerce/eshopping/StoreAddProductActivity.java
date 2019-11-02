@@ -164,27 +164,27 @@ public class StoreAddProductActivity extends AppCompatActivity {
         pamount = product_amount.getText().toString();
 
         if (uri == null) {
-            Toast.makeText(this, "Product image is Empty.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "กรุณาใส่รูปสินค้า", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(pcode)) {
-            Toast.makeText(this, "Product code is Empty.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "กรุณาสแกนรหัสสินค้า", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(pname)) {
-            Toast.makeText(this, "Product name is Empty.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "กรุณาใส่ชื่อสินค้า", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(puid)) {
-            Toast.makeText(this, "Product UID is Empty.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "กรุณากรอก UID", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(price)) {
-            Toast.makeText(this, "Product price is Empty.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "กรุณากรอกราคาสินค้า", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(pdescription)) {
-            Toast.makeText(this, "Product description is Empty.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "กรุณากรอกรายละเอียดสินค้า", Toast.LENGTH_SHORT).show();
         }
-        else if (TextUtils.isEmpty(pcategory)) {
-            Toast.makeText(this, "Select product category.", Toast.LENGTH_SHORT).show();
+        else if (pcategory == "ประเภทสินค้า...") {
+            Toast.makeText(this, "กรุณาเลือกประเภทสินค้า", Toast.LENGTH_SHORT).show();
         }else if (TextUtils.isEmpty(pamount)) {
-            Toast.makeText(this, "Product amount is Empty.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "กรุณาใส่จำนวนสินค้า", Toast.LENGTH_SHORT).show();
         }
         else {
             StoreProductInformation(pcode, puid, pname, price, pdescription, pcategory, pamount);
@@ -204,8 +204,8 @@ public class StoreAddProductActivity extends AppCompatActivity {
 
     // add data to product database;
     private void StoreProductInformation(final String pcode, final String puid, final String pname, final String price, final String pdescription, final String pcategory, final String pamount) {
-        loadingBar.setTitle("Add New Product");
-        loadingBar.setMessage("Dear Admin, please wait while we are adding the new product.");
+        loadingBar.setTitle("เพิ่มสินค้าใหม่");
+        loadingBar.setMessage("กรุณารอสักครู่กำลังเพิ่มสินค้าใหม่");
         loadingBar.setCanceledOnTouchOutside(false);
         loadingBar.show();
 
@@ -258,7 +258,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
                                 Intent intent = new Intent(StoreAddProductActivity.this, StoreViewListActivity.class);
                                 intent.putExtra("pcategory", pcategory);
                                 startActivity(intent);
-                                Toast.makeText(StoreAddProductActivity.this, "Add new Product success..", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(StoreAddProductActivity.this, "เพิ่มสินค้าใหม่สำเร็จ", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
                             else {
@@ -268,7 +268,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
                         }
                     });
         }else {
-            Toast.makeText(this, "Image is not selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "รูปสินค้าไม่ได้เลือก", Toast.LENGTH_SHORT).show();
         }
 
     }

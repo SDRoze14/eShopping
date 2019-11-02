@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                             else if (parentDBName.equals("Users")) {
-                                Toast.makeText(LoginActivity.this, "Welcome "+user.getName() +", Logged in successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Welcome "+user.getName() +", เข้าสู่ระบบสำเร็จ", Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
