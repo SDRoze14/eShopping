@@ -25,9 +25,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,7 +64,6 @@ public class ListActivity extends AppCompatActivity {
         total_ptice = findViewById(R.id.list_total_price);
 
         String cart = getIntent().getStringExtra("cart_id");
-        id_cart_top.setText(cart);
 
         listref = FirebaseDatabase.getInstance().getReference().child("Cart").child(cart);
 
@@ -85,9 +87,7 @@ public class ListActivity extends AppCompatActivity {
                 cartViewHolder.txt_product_id.setText(cart.getProduct_id());
 
                 id = cart.getProduct_id();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Product").child(id);
 
-                ValueEventListener eventListener
                 /* cartViewHolder.txt_product_name.setText(cart.getProduct_name());
                 cartViewHolder.txt_product_id.setText(cart.getProduct_price());
 
