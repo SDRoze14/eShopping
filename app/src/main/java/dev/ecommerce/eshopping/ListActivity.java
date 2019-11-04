@@ -47,7 +47,7 @@ public class ListActivity extends AppCompatActivity {
 
     private DatabaseReference listref;
 
-    private String id;
+    private String id,pcart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +63,9 @@ public class ListActivity extends AppCompatActivity {
         id_cart_top = findViewById(R.id.id_cart_list);
         total_ptice = findViewById(R.id.list_total_price);
 
-        String cart = getIntent().getStringExtra("cart_id");
+        pcart = getIntent().getStringExtra("cart_id");
 
-        listref = FirebaseDatabase.getInstance().getReference().child("Cart").child(cart);
+        listref = FirebaseDatabase.getInstance().getReference().child("Cart").child(pcart);
 
     }
 
@@ -83,15 +83,12 @@ public class ListActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter
             = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(final CartViewHolder cartViewHolder, int i, Cart cart) {
+            protected void onBindViewHolder(final CartViewHolder cartViewHolder, int i, final Cart cart) {
                 cartViewHolder.txt_product_id.setText(cart.getProduct_id());
 
-                id = cart.getProduct_id();
+                if (cart.getUID().equals(cart.getUID()) && cart.getProduct_id().equals(cart.getProduct_id())) {
 
-                /* cartViewHolder.txt_product_name.setText(cart.getProduct_name());
-                cartViewHolder.txt_product_id.setText(cart.getProduct_price());
-
-                */
+                }
 
             }
 

@@ -1,25 +1,25 @@
 package dev.ecommerce.eshopping.Model;
 
 public class Cart {
-    private String cart_id, product_id, product_price, product_name;
+    private String ID, product_id, product_price, UID;
 
     public Cart() {
 
     }
 
-    public Cart(String cart_id, String product_id, String product_price, String product_name) {
-        this.cart_id = cart_id;
+    public Cart(String ID, String product_id, String product_price, String UID) {
+        this.ID = ID;
         this.product_id = product_id;
-        this.product_name = product_name;
+        this.UID = UID;
         this.product_price = product_price;
+}
+
+    public String getID() {
+        return ID;
     }
 
-    public String getCart_id() {
-        return cart_id;
-    }
-
-    public void setCart_id(String cart_id) {
-        this.cart_id = cart_id;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getProduct_id() {
@@ -34,12 +34,12 @@ public class Cart {
         this.product_price = product_price;
     }
 
-    public String getProduct_name() {
-        return product_name;
+    public String getUID() {
+        return UID;
     }
 
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
+    public void setUID(String UID) {
+        this.UID = UID;
     }
 
     public void setProduct_id(String product_id) {
