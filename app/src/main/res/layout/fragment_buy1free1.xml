@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ซื้อ 1 แถม 1"
+        android:textSize="30sp"
+        android:fontFamily="@font/prompt_bold"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>-->
+
+    <RelativeLayout
+        android:id="@+id/add_img_buy1free1"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:background="#abc"
+        android:layout_margin="15dp">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_add_a_photo_black_24dp"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

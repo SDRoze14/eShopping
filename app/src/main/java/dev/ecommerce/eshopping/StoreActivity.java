@@ -16,8 +16,9 @@ import io.paperdb.Paper;
 
 public class StoreActivity extends AppCompatActivity {
 
-    private LinearLayout btn_logout, btn_add_new_product, btn_view_product, btn_scan_bill;
+    private LinearLayout  btn_add_new_product, btn_view_product, btn_scan_bill, btn_promotion;
     private TextView name_use_store;
+    private Button btn_logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class StoreActivity extends AppCompatActivity {
         btn_view_product = findViewById(R.id.btn_view_product);
         btn_scan_bill = findViewById(R.id.btn_scan_bill);
         name_use_store = findViewById(R.id.name_use_store);
+        btn_promotion = findViewById(R.id.promotion);
 
         name_use_store.setText(Prevalent.currentOnlineUser.getName());
 
@@ -61,6 +63,14 @@ public class StoreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(StoreActivity.this, "Scan bill", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btn_promotion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StoreActivity.this, PromotionActivity.class);
+                startActivity(intent);
             }
         });
     }

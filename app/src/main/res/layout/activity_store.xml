@@ -34,7 +34,7 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_add_black_24dp"/>
+                android:src="@drawable/ic_add_shopping_cart_black_24dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -97,7 +97,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btn_logout"
+            android:id="@+id/promotion"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:orientation="vertical"
@@ -109,18 +109,30 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_power_settings_new_black_24dp"/>
+                android:src="@drawable/ic_add_black_24dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ออกจากระบบ"
+                android:text="เพิ่มโปรโมชั่น"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"
                 android:fontFamily="@font/prompt_medium"/>
 
         </LinearLayout>
     </GridLayout>
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ออกจากระบบ"
+        android:textSize="21sp"
+        android:textColor="@color/colorAccent"
+        android:fontFamily="@font/prompt"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
 
 <!--    <RelativeLayout-->
 <!--        android:id="@+id/ralat_1"-->
