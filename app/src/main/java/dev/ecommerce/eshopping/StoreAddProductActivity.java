@@ -82,7 +82,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
         spinner_pcategory = findViewById(R.id.spinner_pcategory);
         //set spinner-------------------------------------------------------------------------
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(StoreAddProductActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.spinner_category));
+                R.layout.item_spinner, getResources().getStringArray(R.array.spinner_category));
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_pcategory.setAdapter(adapter);
@@ -115,7 +115,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
 
         //date and time-------------------------------------------------------------------------------
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
 
         product_date.setText(date.format(calendar.getTime()));
