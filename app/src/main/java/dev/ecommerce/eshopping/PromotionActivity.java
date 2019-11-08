@@ -1,10 +1,13 @@
 package dev.ecommerce.eshopping;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,12 +15,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.w3c.dom.Text;
 
@@ -28,12 +35,15 @@ public class PromotionActivity extends AppCompatActivity{
     private Spinner spinner;
     private TextView date_start, time_start, date_end, time_end;
     private Button scan_pcode, promotion_done;
-    private EditText pcode;
-    private ImageView back;
+    private String pcode;
+    private EditText promo_code;
+    private ImageView back, add_img_buy1free1, icon_img_add;
+    private FrameLayout frameLayout;
 
     private LinearLayout sdate, stime, edate, etime;
-
     private int day, mouth, syear, house, sminute;
+
+    private Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,18 +51,38 @@ public class PromotionActivity extends AppCompatActivity{
         setContentView(R.layout.activity_promotion);
 
         date_start = findViewById(R.id.date_start);
-        time_start = findViewById(R.id.time_start);
         date_end = findViewById(R.id.date_end);
-        time_end = findViewById(R.id.time_end);
         back = findViewById(R.id.back_promotion);
         scan_pcode = findViewById(R.id.btn_scan_pcode_promo);
         promotion_done = findViewById(R.id.promotion_done);
-        pcode = findViewById(R.id.pcode_promo);
+        promo_code = findViewById(R.id.pcode_promo);
+        add_img_buy1free1 = (ImageView) findViewById(R.id.img_promotion);
+        frameLayout = findViewById(R.id.frame_promotion);
 
         sdate = findViewById(R.id.date_start_promo);
-        stime = findViewById(R.id.time_start_promo);
         edate = findViewById(R.id.date_end_promo);
-        etime = findViewById(R.id.time_end_promotion);
+
+//        product code //////////////////////////////////////////////////////////////////////////////////
+        pcode = getIntent().getStringExtra("pcode");
+        promo_code.setText(pcode);
+
+        scan_pcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ScanCodePromotionActivity.class));
+            }
+        });
+
+//        Image //////////////////////////////////////////////
+//          buy 1 free 1
+        add_img_buy1free1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CropImage.activity(uri)
+                        .setAspectRatio(1,1)
+                        .start(PromotionActivity.this);
+            }
+        });
 
 //        Spinner////////////////////////////////////////////////////////////////////////////////////
         spinner = findViewById(R.id.type_promotion);
@@ -62,28 +92,18 @@ public class PromotionActivity extends AppCompatActivity{
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        final FragmentBuy1Free1 buy1free1 = new FragmentBuy1Free1();
         final FragmentDiscount discount = new FragmentDiscount();
-        final FragmentBuy2 buy2 = new FragmentBuy2();
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String promotion = spinner.getSelectedItem().toString();
                 if (promotion.equals("กรุณาเลือกโปรโมชั่น")) {
-
-                }else if (promotion.equals("ซื้อ 1 แถม 1")) {
-                    replaceFragment(buy1free1);
-
+                    Toast.makeText(PromotionActivity.this, "กรุณาเลือกโปรโมชั่น", Toast.LENGTH_SHORT).show();
                 }else if (promotion.equals("ลดราคา")) {
                     replaceFragment(discount);
 
-                }else if (promotion.equals("ซื้อคู่กัน")) {
-                    replaceFragment(buy2);
-
-
                 }
-
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -116,24 +136,6 @@ public class PromotionActivity extends AppCompatActivity{
             }
         });
 
-        house = calendar.get(Calendar.HOUR);
-        sminute = calendar.get(Calendar.MINUTE);
-//        time start promotion
-        time_start.setText(house+":"+sminute);
-        stime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                TimePickerDialog timePickerDialog = new TimePickerDialog(PromotionActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        time_start.setText(hourOfDay+":"+minute);
-                    }
-                },house, sminute, false);
-                timePickerDialog.show();
-            }
-        });
-
 //        date end promotion
         date_end.setText(day+"/"+mouth+"/"+syear);
         edate.setOnClickListener(new View.OnClickListener() {
@@ -149,20 +151,6 @@ public class PromotionActivity extends AppCompatActivity{
                 datePickerDialog.show();
             }
         });
-
-//        time end promotion
-        time_end.setText(house+":"+sminute);
-        etime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(PromotionActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        time_end.setText(hourOfDay+":"+minute);
-                    }
-                },house, sminute, false);
-            }
-        });
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -172,6 +160,20 @@ public class PromotionActivity extends AppCompatActivity{
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
+            uri = result.getUri();
+            add_img_buy1free1.setImageURI(uri);
+
+        }else {
+            Toast.makeText(this, "Error, Try Again.", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(PromotionActivity.this, PromotionActivity.class));
+            finish();
+        }
+    }
 }

@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FragmentBuy2"></activity>
+        <activity android:name=".ScanCodePromotionActivity"></activity>
+        <activity android:name=".FragmentBuy2" />
         <activity android:name=".FragmentDiscount" />
         <activity android:name=".PromotionActivity" />
         <activity android:name=".StoreViewCategoryActivity" />
