@@ -2,13 +2,14 @@ package dev.ecommerce.eshopping.Model;
 
 public class Product {
 
-    private String id, name, price, description, category, image, UID, date, time, amount;
+    private String id, name, description, category, image, UID, date, time, amount;
+    private Float price;
 
     public Product() {
 
     }
 
-    public Product(String id, String name, String price, String description, String category, String image, String UID, String date, String time, String amount) {
+    public Product(String id, String name, Float price, String description, String category, String image, String UID, String date, String time, String amount) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -37,11 +38,11 @@ public class Product {
         this.name = name;
     }
 
-    public String getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

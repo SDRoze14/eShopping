@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         store_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                login_btn.setText("Login store");
+                login_btn.setText("ลงชื่อเข้าใช้");
                 store_login.setVisibility(View.INVISIBLE);
                 user_login.setVisibility(View.VISIBLE);
                 parentDBName = "Store";
@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         user_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                login_btn.setText("Login");
+                login_btn.setText("ลงชื่อเข้าใช้");
                 store_login.setVisibility(View.VISIBLE);
                 user_login.setVisibility(View.INVISIBLE);
                 parentDBName = "Users";

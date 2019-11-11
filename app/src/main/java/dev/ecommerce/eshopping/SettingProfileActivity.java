@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -72,10 +73,10 @@ public class SettingProfileActivity extends AppCompatActivity {
         radioFemail = findViewById(R.id.radio_female);
 
         if (radioMale.isChecked()) {
-            gender = "Male";
+            gender = "ชาย";
         }
         if (radioFemail.isChecked()) {
-            gender = "Female";
+            gender = "หญิง";
         }
 
         close.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +139,7 @@ public class SettingProfileActivity extends AppCompatActivity {
         userMap.put("phone", phoneSetting.getText().toString());
         userMap.put("address", addressSetting.getText().toString());
         userMap.put("email", emailSetting.getText().toString());
-//        userMap.put("gender", gender.getBytes().toString());
+        userMap.put("gender", gender);
         ref.child(Prevalent.currentOnlineUser.getPhone()).updateChildren(userMap);
 
         progressDialog.dismiss();
@@ -219,9 +220,10 @@ public class SettingProfileActivity extends AppCompatActivity {
                                 userMap.put("phone", phoneSetting.getText().toString());
                                 userMap.put("address", addressSetting.getText().toString());
                                 userMap.put("email", emailSetting.getText().toString());
-//                        userMap.put("gender", gender.getBytes().toString());
+                                userMap.put("gender", gender);
                                 userMap.put("image", myUrl);
                                 ref.child(Prevalent.currentOnlineUser.getPhone()).updateChildren(userMap);
+
 
                                 progressDialog.dismiss();
 
@@ -253,13 +255,13 @@ public class SettingProfileActivity extends AppCompatActivity {
                         String phone = dataSnapshot.child("phone").getValue().toString();
                         String address = dataSnapshot.child("address").getValue().toString();
                         String email = dataSnapshot.child("email").getValue().toString();
-//                        String gender = dataSnapshot.child("gender").getValue().toString();
 
                         Picasso.get().load(image).into(imageProfileSetting);
                         nameSetting.setText(name);
                         phoneSetting.setText(phone);
                         addressSetting.setText(address);
                         emailSetting.setText(email);
+
                     }
                 }
             }

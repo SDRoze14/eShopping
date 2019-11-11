@@ -28,7 +28,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -47,7 +52,10 @@ public class ListActivity extends AppCompatActivity {
 
     private DatabaseReference listref;
 
-    private String id,pcart;
+    private String id,pcart, n;
+    private String[] nid;
+
+    private Float tprice = Float.valueOf(0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +93,40 @@ public class ListActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(final CartViewHolder cartViewHolder, int i, final Cart cart) {
                 cartViewHolder.txt_product_id.setText(cart.getProduct_id());
+                String num = String.valueOf(i);
+                cartViewHolder.num.setText(num);
 
-                if (cart.getUID().equals(cart.getUID()) && cart.getProduct_id().equals(cart.getProduct_id())) {
+                final String id = cartViewHolder.txt_product_id.getText().toString();
 
-                }
+                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                        .child("Product").child(id);
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            String name = dataSnapshot.child("name").getValue().toString();
+                            Float price = Float.valueOf(dataSnapshot.child("price").getValue().toString());
+                            String p = Float.toString(price);
+
+                            cartViewHolder.txt_product_name.setText(name);
+                            cartViewHolder.txt_product_price.setText(p);
+
+                            for (int n=0;n<i;n++){
+                                tprice = tprice +  Float.valueOf(p);
+                            }
+                            String ttp = String.valueOf(tprice);
+                            total_ptice.setText(ttp);
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
 
             }
 
@@ -103,5 +141,5 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         adapter.startListening();
 
-    }
+            }
 }

@@ -35,9 +35,6 @@ public class StoreViewListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_view_list);
 
-        pcategory = getIntent().getStringExtra("pcategory");
-
-
         productref = FirebaseDatabase.getInstance().getReference().child("Product");
 
         recyclerView = findViewById(R.id.recycleView_store);
@@ -50,7 +47,7 @@ public class StoreViewListActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StoreViewListActivity.this, StoreViewCategoryActivity.class);
+                Intent intent = new Intent(StoreViewListActivity.this, StoreActivity.class);
                 startActivity(intent);
             }
         });
@@ -74,7 +71,6 @@ public class StoreViewListActivity extends AppCompatActivity {
                         productViewHolder.txt_price.setText("ราคา : "+product.getPrice()+" บาท");
                         productViewHolder.txt_pamount.setText("X"+product.getAmount());
                         Picasso.get().load(product.getImage()).into(productViewHolder.img_product);
-
                     }
 
                     @NonNull

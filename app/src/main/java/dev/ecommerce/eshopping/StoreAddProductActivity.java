@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -54,7 +55,8 @@ public class StoreAddProductActivity extends AppCompatActivity {
 
     private ProgressDialog loadingBar;
 
-    private String pcode,pname,pdescription,pcategory,price,pdate,ptime,puid,pimg,pamount;
+    private String pcode,pname,pdescription,pcategory,pdate,ptime,puid,pimg,pamount;
+    private Float price;
 
     private Uri uri;
     private String myUri;
@@ -163,7 +165,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
         pcode = editText_barcode.getText().toString();
         puid = product_uid.getText().toString();
         pname = product_name.getText().toString();
-        price = product_price.getText().toString();
+        price = Float.valueOf(product_price.getText().toString());
         pdescription = product_description.getText().toString();
         pcategory = spinner_pcategory.getSelectedItem().toString();
         pamount = product_amount.getText().toString();
@@ -180,7 +182,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
         else if (TextUtils.isEmpty(puid)) {
             Toast.makeText(this, "กรุณากรอก UID", Toast.LENGTH_SHORT).show();
         }
-        else if (TextUtils.isEmpty(price)) {
+        else if (price == null) {
             Toast.makeText(this, "กรุณากรอกราคาสินค้า", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(pdescription)) {
@@ -193,27 +195,17 @@ public class StoreAddProductActivity extends AppCompatActivity {
         }
         else {
             StoreProductInformation(pcode, puid, pname, price, pdescription, pcategory, pamount);
-            StoreCategoryAdd(pcategory);
         }
     }
 
     // add category to category database------------------------------------------------------------------
-    private void StoreCategoryAdd( String pcategory) {
-
-        DatabaseReference category_ref = FirebaseDatabase.getInstance().getReference().child("Category");
-        HashMap<String, Object> categoryMap = new HashMap<>();
-        categoryMap.put("category", pcategory);
-
-        category_ref.child(pcategory).updateChildren(categoryMap);
-    }
 
     // add data to product database;
-    private void StoreProductInformation(final String pcode, final String puid, final String pname, final String price, final String pdescription, final String pcategory, final String pamount) {
+    private void StoreProductInformation(final String pcode, final String puid, final String pname, final Float price, final String pdescription, final String pcategory, final String pamount) {
         loadingBar.setTitle("เพิ่มสินค้าใหม่");
         loadingBar.setMessage("กรุณารอสักครู่กำลังเพิ่มสินค้าใหม่");
         loadingBar.setCanceledOnTouchOutside(false);
         loadingBar.show();
-
 
         pdate = product_date.getText().toString();
         ptime = product_time.getText().toString();
@@ -256,6 +248,23 @@ public class StoreAddProductActivity extends AppCompatActivity {
                                 productMap.put("date", pdate);
                                 productMap.put("image", myUri);
                                 ref.child(pcode).updateChildren(productMap);
+
+//                                Firestore --------------------------------------------------------------------------
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                db.collection("Product").document(pcode)
+                                        .set(productMap)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+
+                                            }
+                                        });
 
                                 loadingBar.dismiss();
 

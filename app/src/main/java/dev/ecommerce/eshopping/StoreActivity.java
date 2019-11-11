@@ -54,7 +54,7 @@ public class StoreActivity extends AppCompatActivity {
         btn_view_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent3 = new Intent(StoreActivity.this, StoreViewCategoryActivity.class);
+                Intent intent3 = new Intent(StoreActivity.this, StoreViewListActivity.class);
                 startActivity(intent3);
             }
         });

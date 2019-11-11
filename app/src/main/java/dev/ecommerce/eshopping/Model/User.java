@@ -2,13 +2,13 @@ package dev.ecommerce.eshopping.Model;
 
 public class User {
     private String name,phone,password,image,address,gender,email;
-    private Integer money;
+    private Float money;
 
     public User(){
 
     }
 
-    public User(String name, String phone, String password, String image, String address, String gender, String email, Integer money) {
+    public User(String name, String phone, String password, String image, String address, String gender, String email, Float money) {
         this.name = name;
         this.phone = phone;
         this.password = password;
@@ -75,11 +75,11 @@ public class User {
         this.email = email;
     }
 
-    public Integer getMoney() {
+    public Float getMoney() {
         return money;
     }
 
-    public void setMoney(Integer money) {
+    public void setMoney(Float money) {
         this.money = money;
     }
 

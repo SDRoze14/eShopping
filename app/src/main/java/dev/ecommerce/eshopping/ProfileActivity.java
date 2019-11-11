@@ -37,14 +37,14 @@ public class ProfileActivity extends AppCompatActivity {
         phoneProfile.setText(Prevalent.currentOnlineUser.getPhone());
         emailProfile.setText(Prevalent.currentOnlineUser.getEmail());
         addressProfile.setText(Prevalent.currentOnlineUser.getAddress());
-        moneyProfile.setText(Integer.toString(Prevalent.currentOnlineUser.getMoney()));
+        moneyProfile.setText(Float.toString(Prevalent.currentOnlineUser.getMoney()));
         Picasso.get().load(Prevalent.currentOnlineUser.getImage()).placeholder(R.drawable.user_profile).into(imageProfile);
 
 
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(ProfileActivity.this, HomeActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
