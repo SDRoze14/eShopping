@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:id="@+id/relay_home"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -36,16 +36,6 @@
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"/>
 
-
-        <ImageView
-            android:id="@+id/notification_bar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="8dp"
-            android:src="@drawable/ic_notifications"
-            android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
     <include layout="@layout/view_money"
@@ -60,8 +50,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/relay_home"
-        >
+        android:layout_below="@+id/relay_home">
 
         <RelativeLayout
             android:layout_width="match_parent"

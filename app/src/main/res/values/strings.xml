@@ -51,4 +51,11 @@
         <item>ซื้อคู่กัน</item>
     </string-array>
 
+    <string-array name="bank">
+        <item>กรุณาเลือกธนาคาร</item>
+        <item>กรุงไทย</item>
+        <item>ไทยพาณิชย์</item>
+        <item>กสิการไทย</item>
+    </string-array>
+
 </resources>

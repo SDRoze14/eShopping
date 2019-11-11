@@ -88,33 +88,13 @@
                     android:layout_marginLeft="10dp"/>
             </LinearLayout>
 
-            <!--UID-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/puid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/linear_add_product"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
-
-                <EditText
-                    android:id="@+id/edit_puid"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="UID"
-                    android:textSize="17sp"
-                    android:inputType="text"
-                    android:fontFamily="@font/prompt_medium"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <!--Product Name-->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/pname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/puid"
+                android:layout_below="@id/linear_add_product"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp">
@@ -145,7 +125,7 @@
                     android:id="@+id/edit_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="ราคา่ (บาท)"
+                    android:hint="ราคา (บาท)"
                     android:fontFamily="@font/prompt_medium"
                     android:textSize="17sp"
                     android:inputType="number"/>

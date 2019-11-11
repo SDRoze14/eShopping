@@ -29,21 +29,11 @@
             android:layout_height="wrap_content"
             android:text="200"
             android:fontFamily="@font/prompt_medium"
-            android:textSize="35sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"
-            android:layout_centerHorizontal="true"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="บาท"
-            android:fontFamily="@font/prompt_medium"
-            android:textSize="25sp"
-            android:textColor="@color/colorPrimary"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="50dp"/>
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
 </RelativeLayout>

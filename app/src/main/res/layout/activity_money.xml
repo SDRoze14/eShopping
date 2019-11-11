@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MoneyActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/back_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_back_24dp"
+                android:layout_alignParentTop="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="จัดการเงิน"
+                android:textSize="20sp"
+                android:layout_centerInParent="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/prompt_medium"/>
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+
+    <View
+        android:id="@+id/sdm"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/shadow_top"
+        android:layout_below="@+id/toolbar_money"/>
+
+    <RelativeLayout
+        android:id="@+id/all_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sdm">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ยอดเงินในบัญชี"
+            android:textSize="20sp"
+            android:fontFamily="@font/prompt"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="200 บาท"
+            android:textSize="20sp"
+            android:textColor="@color/colorAccent"
+            android:fontFamily="@font/prompt"
+            android:layout_marginRight="23dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/bank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/all_money"
+        android:background="#c0c0c0">
+
+        <Button
+            android:id="@+id/btn_add_bank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+ เชื่อมบัญชีธนาคาร"
+            android:textSize="17sp"
+            android:textColor="#ffffff"
+            android:background="@color/colorPrimaryDark"
+            android:fontFamily="@font/prompt"
+            android:layout_margin="15dp"/>
+
+        <RelativeLayout
+            android:id="@+id/btn_bank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_add_bank"
+            android:background="#ffffff"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="บัญชีธนาคาร"
+                android:textSize="17sp"
+                android:fontFamily="@font/prompt"
+                android:layout_margin="20dp"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:id="@+id/atm_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1234 5678 9012 3456"
+                android:textSize="17sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/prompt"
+                android:layout_margin="20dp"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

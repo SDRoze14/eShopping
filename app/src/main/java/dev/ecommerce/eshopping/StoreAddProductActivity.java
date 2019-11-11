@@ -46,7 +46,7 @@ import dev.ecommerce.eshopping.Prevalent.Prevalent;
 
 public class StoreAddProductActivity extends AppCompatActivity {
 
-    private EditText product_uid, product_name, product_price, product_description, product_amount;
+    private EditText product_name, product_price, product_description, product_amount;
     public static TextView editText_barcode = null;
     private TextView product_date, product_time, close, done;
     private ImageView product_image;
@@ -62,7 +62,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
     private String myUri;
     private StorageReference pImgref;
 
-    private String status;
+    private String status, category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,6 @@ public class StoreAddProductActivity extends AppCompatActivity {
 
         btn_scan_barcode =findViewById(R.id.btn_scan_barcode);
         editText_barcode = findViewById(R.id.txt_barcode);
-        product_uid = findViewById(R.id.edit_puid);
         product_name = findViewById(R.id.edit_pname);
         product_price = findViewById(R.id.edit_price);
         product_description = findViewById(R.id.edit_pdescription);
@@ -82,6 +81,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
         product_image = findViewById(R.id.img_product);
         product_amount = findViewById(R.id.edit_pamount);
         spinner_pcategory = findViewById(R.id.spinner_pcategory);
+
         //set spinner-------------------------------------------------------------------------
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(StoreAddProductActivity.this,
                 R.layout.item_spinner, getResources().getStringArray(R.array.spinner_category));
@@ -92,7 +92,7 @@ public class StoreAddProductActivity extends AppCompatActivity {
         spinner_pcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String category = spinner_pcategory.getSelectedItem().toString();
+                category = spinner_pcategory.getSelectedItem().toString();
                 if (category.equals("กรุณาเลือกประเภทสินค้า")) {
 
                 }else {
@@ -124,12 +124,12 @@ public class StoreAddProductActivity extends AppCompatActivity {
         product_time.setText(time.format(calendar.getTime()));
         //---------------------------------------------------------------------------------------------
 
+
         //btn scan go to scan barcode activity--------------------------------------------------------
         btn_scan_barcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), ScanAddProductActivity.class));
-
             }
         });
         //-------------------------------------------------------------------------------------------
@@ -163,7 +163,6 @@ public class StoreAddProductActivity extends AppCompatActivity {
     //set edit text to string ----------------------------------------------------------------------------
     private void AddNewProduct() {
         pcode = editText_barcode.getText().toString();
-        puid = product_uid.getText().toString();
         pname = product_name.getText().toString();
         price = Float.valueOf(product_price.getText().toString());
         pdescription = product_description.getText().toString();
@@ -178,9 +177,6 @@ public class StoreAddProductActivity extends AppCompatActivity {
         }
         else if (TextUtils.isEmpty(pname)) {
             Toast.makeText(this, "กรุณาใส่ชื่อสินค้า", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(puid)) {
-            Toast.makeText(this, "กรุณากรอก UID", Toast.LENGTH_SHORT).show();
         }
         else if (price == null) {
             Toast.makeText(this, "กรุณากรอกราคาสินค้า", Toast.LENGTH_SHORT).show();
@@ -239,7 +235,6 @@ public class StoreAddProductActivity extends AppCompatActivity {
                                 HashMap<String, Object> productMap = new HashMap<>();
                                 productMap.put("id", pcode);
                                 productMap.put("name", pname);
-                                productMap.put("uid", puid);
                                 productMap.put("price", price);
                                 productMap.put("category", pcategory);
                                 productMap.put("description", pdescription);

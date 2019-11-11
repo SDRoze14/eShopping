@@ -1,5 +1,6 @@
 package dev.ecommerce.eshopping;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,9 +10,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import dev.ecommerce.eshopping.Prevalent.Prevalent;
@@ -20,6 +29,8 @@ import io.paperdb.Paper;
 public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private Button scan_barcode;
+    private TextView all_money;
+    private String money;
 
 
     @Override
@@ -30,8 +41,28 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         BottomNavigationView nav_bt_View = findViewById(R.id.bt_nav_bar);
         CircleImageView imageProfile = findViewById(R.id.user_image_profile);
         scan_barcode = findViewById(R.id.scan_barcode);
+        all_money = findViewById(R.id.money_view_home);
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(Prevalent.currentOnlineUser.getPhone());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    Float price = Float.valueOf(dataSnapshot.child("money").getValue().toString());
+
+                    all_money.setText(Float.toString(price)+" บาท");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         Picasso.get().load(Prevalent.currentOnlineUser.getImage()).placeholder(R.drawable.user_profile).into(imageProfile);
+
 
         scan_barcode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +91,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         if (id==R.id.bt_home) {
 
         }else if (id==R.id.bt_money) {
+            Intent intent = new Intent(HomeActivity.this, MoneyActivity.class);
+            startActivity(intent);
 
         }else if (id==R.id.bt_menu) {
 
