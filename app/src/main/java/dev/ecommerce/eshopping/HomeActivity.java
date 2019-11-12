@@ -2,6 +2,8 @@ package dev.ecommerce.eshopping;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +33,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     private Button scan_barcode;
     private TextView all_money;
     private String money;
-
+    private ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         CircleImageView imageProfile = findViewById(R.id.user_image_profile);
         scan_barcode = findViewById(R.id.scan_barcode);
         all_money = findViewById(R.id.money_view_home);
+
+        PagerAdapter adapter = new PageAdapter(getSupportFragmentManager());
+        pager = findViewById(R.id.pager);
+        pager.setAdapter(adapter);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(Prevalent.currentOnlineUser.getPhone());
         reference.addValueEventListener(new ValueEventListener() {
@@ -119,7 +125,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         }
         return true;
     }
-    
+
 
 
 

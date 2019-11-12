@@ -15,6 +15,7 @@ import dev.ecommerce.eshopping.R;
 public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     public TextView txt_product_id, txt_product_name, txt_product_price,num;
+    public ImageView imageView;
     private ItemClickListner itemClickListner;
 
     public CartViewHolder(@NonNull View itemView) {
@@ -24,6 +25,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         txt_product_name = itemView.findViewById(R.id.name_product_list);
         txt_product_price = itemView.findViewById(R.id.price_product_list);
         num = itemView.findViewById(R.id.amount_product_list);
+        imageView = itemView.findViewById(R.id.pic_product_list);
     }
 
     @Override

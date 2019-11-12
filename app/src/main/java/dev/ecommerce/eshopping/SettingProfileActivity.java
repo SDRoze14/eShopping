@@ -227,7 +227,7 @@ public class SettingProfileActivity extends AppCompatActivity {
 
                                 progressDialog.dismiss();
 
-                                startActivity(new Intent(SettingProfileActivity.this, SettingProfileActivity.class));
+                                startActivity(new Intent(SettingProfileActivity.this, LoginActivity.class));
                                 Toast.makeText(SettingProfileActivity.this, "แก้ไขบัญชีส่วนตัวสำเร็จ", Toast.LENGTH_SHORT).show();
                                 finish();
                             }else {

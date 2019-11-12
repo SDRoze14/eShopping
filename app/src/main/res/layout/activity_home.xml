@@ -47,85 +47,34 @@
         android:layout_marginRight="40dp"
         android:layout_marginTop="20dp"/>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/relay_home">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_home">
 
-        <RelativeLayout
+        <Button
+            android:id="@+id/scan_barcode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="70dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="50dp"
+            android:background="@color/colorPrimary"
+            android:fontFamily="@font/prompt_medium"
+            android:text="สแกนรถเข็น"
+            android:textSize="30sp" />
 
-            <Button
-                android:id="@+id/scan_barcode"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="200dp"
-                android:layout_marginRight="50dp"
-                android:background="@color/colorPrimary"
-                android:fontFamily="@font/prompt_medium"
-                android:text="สแกนรถเข็น"
-                android:textSize="30sp" />
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:layout_below="@id/scan_barcode"
+            android:layout_margin="15dp"/>
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/test2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Test"
-                android:textSize="50dp"
-                android:gravity="center"
-                android:layout_below="@+id/scan_barcode"
-                android:padding="30dp"
-                android:background="@android:color/white"/>
 
-            <TextView
-                android:id="@+id/test3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Test"
-                android:textSize="50dp"
-                android:gravity="center"
-                android:layout_below="@+id/test2"
-                android:padding="30dp"
-                android:background="@android:color/white"/>
 
-            <TextView
-                android:id="@+id/test4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Test"
-                android:textSize="50dp"
-                android:gravity="center"
-                android:layout_below="@+id/test3"
-                android:padding="30dp"
-                android:background="@android:color/white"/>
 
-            <TextView
-                android:id="@+id/test5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Test"
-                android:textSize="50dp"
-                android:gravity="center"
-                android:layout_below="@+id/test4"
-                android:padding="30dp"
-                android:background="@android:color/white" />
-
-            <TextView
-                android:id="@+id/test6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Test"
-                android:textSize="50dp"
-                android:gravity="center"
-                android:layout_below="@+id/test5"
-                android:padding="30dp"
-                android:background="@android:color/white"/>
-
-        </RelativeLayout>
-
-    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bt_nav_bar"

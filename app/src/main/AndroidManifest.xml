@@ -16,7 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddMoneyActivity"></activity>
+        <activity android:name=".Page2"></activity>
+        <activity android:name=".Page1" />
+        <activity android:name=".PaymentActivity" />
+        <activity android:name=".BillActivity" />
+        <activity android:name=".AddMoneyActivity" />
         <activity android:name=".MoneyActivity" />
         <activity android:name=".AddBankActivity" />
         <activity android:name=".ScanCodePromotionActivity" />

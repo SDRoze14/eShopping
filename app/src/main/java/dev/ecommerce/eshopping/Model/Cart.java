@@ -1,7 +1,7 @@
 package dev.ecommerce.eshopping.Model;
 
 public class Cart {
-    private String ID, product_id, UID;
+    private String ID, product_id, UID ,image;
     private Float product_price;
 
 
@@ -9,11 +9,20 @@ public class Cart {
 
     }
 
-    public Cart(String ID, String product_id, Float product_price, String UID) {
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Cart(String ID, String product_id, Float product_price, String UID, String image) {
         this.ID = ID;
         this.product_id = product_id;
         this.UID = UID;
         this.product_price = product_price;
+        this.image = image;
 
 }
 

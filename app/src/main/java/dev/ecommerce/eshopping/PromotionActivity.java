@@ -57,7 +57,7 @@ public class PromotionActivity extends AppCompatActivity{
         promotion_done = findViewById(R.id.promotion_done);
         promo_code = findViewById(R.id.pcode_promo);
         add_img_buy1free1 = (ImageView) findViewById(R.id.img_promotion);
-        frameLayout = findViewById(R.id.frame_promotion);
+//        frameLayout = findViewById(R.id.frame_promotion);
 
         sdate = findViewById(R.id.date_start_promo);
         edate = findViewById(R.id.date_end_promo);
@@ -101,7 +101,7 @@ public class PromotionActivity extends AppCompatActivity{
                 if (promotion.equals("กรุณาเลือกโปรโมชั่น")) {
                     Toast.makeText(PromotionActivity.this, "กรุณาเลือกโปรโมชั่น", Toast.LENGTH_SHORT).show();
                 }else if (promotion.equals("ลดราคา")) {
-                    replaceFragment(discount);
+//                    replaceFragment(discount);
 
                 }
             }
@@ -153,12 +153,12 @@ public class PromotionActivity extends AppCompatActivity{
         });
     }
 
-    private void replaceFragment(Fragment fragment) {
+   /* private void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_promotion, fragment)
                 .commit();
 
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
