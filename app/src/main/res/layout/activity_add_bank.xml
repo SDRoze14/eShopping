@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/back_money"
+                android:id="@+id/back_bank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_back_24dp"
@@ -156,7 +156,7 @@
                 android:layout_below="@id/txtv_id_card"
                 android:hint="เช่น 1 2345 67890 12 3"
                 android:textSize="17sp"
-                android:inputType="numberPassword"
+                android:inputType="number"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="7dp"/>

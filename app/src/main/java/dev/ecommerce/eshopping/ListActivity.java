@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -47,6 +48,7 @@ public class ListActivity extends AppCompatActivity {
     private Button btn_payment;
     private int day, mouth, year, hours, min, sec;
     private String date ,d, t, y, hh, mm, ss, orderID;
+    private ImageView close_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class ListActivity extends AppCompatActivity {
         id_cart_top = findViewById(R.id.id_cart_list);
         total_ptice = findViewById(R.id.list_total_price);
         btn_payment = findViewById(R.id.pay_list);
+        close_list = findViewById(R.id.close_list);
 
         pcart = getIntent().getStringExtra("cart_id");
 
@@ -72,9 +75,9 @@ public class ListActivity extends AppCompatActivity {
         SimpleDateFormat time = new SimpleDateFormat("HHmmss");
 
         d = date.format(calendar.getTime());
-        t = date.format(calendar.getTime());
+        t = time.format(calendar.getTime());
 
-        orderID = Prevalent.currentOnlineUser.getPhone()+d+t;
+        orderID = Prevalent.currentOnlineUser.getPhone()+pcart+d+t;
 
         btn_payment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +87,13 @@ public class ListActivity extends AppCompatActivity {
                 intent.putExtra("Order ID", orderID);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        close_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ListActivity.this, HomeActivity.class));
             }
         });
 

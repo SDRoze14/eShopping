@@ -35,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
     private androidx.appcompat.widget.Toolbar toolbar;
     private ImageView logo_bar_back;
+    private float money;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
