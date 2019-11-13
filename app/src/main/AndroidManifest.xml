@@ -27,7 +27,6 @@
         <activity android:name=".FragmentBuy2" />
         <activity android:name=".FragmentDiscount" />
         <activity android:name=".PromotionActivity" />
-        <activity android:name=".TestActivity" />
         <activity android:name=".StoreViewListActivity" />
         <activity android:name=".ScanAddProductActivity" />
         <activity android:name=".StoreAddProductActivity" />

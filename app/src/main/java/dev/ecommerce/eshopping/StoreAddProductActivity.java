@@ -244,28 +244,11 @@ public class StoreAddProductActivity extends AppCompatActivity {
                                 productMap.put("image", myUri);
                                 ref.child(pcode).updateChildren(productMap);
 
-//                                Firestore --------------------------------------------------------------------------
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                db.collection("Product").document(pcode)
-                                        .set(productMap)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-
-                                            }
-                                        });
 
                                 loadingBar.dismiss();
 
 
                                 Intent intent = new Intent(StoreAddProductActivity.this, StoreViewListActivity.class);
-                                intent.putExtra("pcategory", pcategory);
                                 startActivity(intent);
                                 Toast.makeText(StoreAddProductActivity.this, "เพิ่มสินค้าใหม่สำเร็จ", Toast.LENGTH_SHORT).show();
                                 finish();

@@ -45,7 +45,7 @@
         android:layout_below="@+id/relay_home"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="10dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -55,21 +55,47 @@
         <Button
             android:id="@+id/scan_barcode"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="50dp"
             android:background="@color/colorPrimary"
             android:fontFamily="@font/prompt_medium"
             android:text="สแกนรถเข็น"
-            android:textSize="30sp" />
+            android:textSize="25sp" />
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/pager"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="320dp"
-            android:layout_below="@id/scan_barcode"
-            android:layout_margin="15dp"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/scan_barcode"
+            android:background="#ffffff"
+            android:layout_margin="15dp">
+            <TextView
+                android:id="@+id/txt_promotion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="โปรโมชั่น"
+                android:textSize="15sp"
+                android:fontFamily="@font/prompt"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_promotion">
+
+
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/pager"
+                    android:layout_width="220dp"
+                    android:layout_height="220dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
     </RelativeLayout>
 
 

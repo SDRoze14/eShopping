@@ -1,31 +1,59 @@
 package dev.ecommerce.eshopping;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
-import dev.ecommerce.eshopping.Page1;
-import dev.ecommerce.eshopping.Page2;
+import com.squareup.picasso.Picasso;
 
-public class PageAdapter extends FragmentPagerAdapter {
+import java.util.List;
 
-    public PageAdapter(FragmentManager fm){
-        super(fm);
+import dev.ecommerce.eshopping.Model.Promotion;
+
+public class PageAdapter extends PagerAdapter {
+
+    Context context;
+    List<Promotion> promotionList;
+    LayoutInflater inflater;
+
+    public PageAdapter(Context context, List<Promotion> promotionList) {
+        this.context = context;
+        this.promotionList = promotionList;
+        inflater = LayoutInflater.from(context);
     }
-
 
     @Override
     public int getCount() {
-        return 2;
+        return promotionList.size();
     }
 
-    public Fragment getItem(int position) {
-        if(position == 0)
-            return new Page1();
-        else if(position == 1)
-            return new Page2();
+    @Override
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+        return view == object;
+    }
 
-        return null;
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        ((ViewPager)container).removeView((View)object);
+    }
+
+    @NonNull
+    @Override
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+
+        View view = inflater.inflate(R.layout.pager_item, container, false);
+
+        ImageView image_promotion = view.findViewById(R.id.image_promotion);
+
+        Picasso.get().load(promotionList.get(position).getImage_promotion()).into(image_promotion);
+
+        container.addView(view);
+        return view;
     }
 }

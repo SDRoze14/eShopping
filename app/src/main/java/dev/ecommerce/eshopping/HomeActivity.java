@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -22,18 +23,26 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import dev.ecommerce.eshopping.Listener.FirebaseLoadPager;
+import dev.ecommerce.eshopping.Model.Promotion;
 import dev.ecommerce.eshopping.Prevalent.Prevalent;
+import dev.ecommerce.eshopping.Transformer.DepthPageTransformer;
 import io.paperdb.Paper;
 
-public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, FirebaseLoadPager, ValueEventListener {
 
     private Button scan_barcode;
     private TextView all_money;
     private String money;
     private ViewPager pager;
+    private PagerAdapter pagerAdapter;
+    private DatabaseReference refPromotion;
+    private FirebaseLoadPager firebaseLoadPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +54,14 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         scan_barcode = findViewById(R.id.scan_barcode);
         all_money = findViewById(R.id.money_view_home);
 
-        PagerAdapter adapter = new PageAdapter(getSupportFragmentManager());
-        pager = findViewById(R.id.pager);
-        pager.setAdapter(adapter);
+        refPromotion = FirebaseDatabase.getInstance().getReference("Promotion");
+
+         firebaseLoadPager = this;
+         
+         loadPromotion();
+
+         pager = findViewById(R.id.pager);
+         pager.setPageTransformer(true, new DepthPageTransformer());
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(Prevalent.currentOnlineUser.getPhone());
         reference.addValueEventListener(new ValueEventListener() {
@@ -89,6 +103,25 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         nav_bt_View.setOnNavigationItemSelectedListener(this);
     }
 
+    private void loadPromotion() {
+        /*refPromotion.addListenerForSingleValueEvent(new ValueEventListener() {
+            List<Promotion>  promotionList = new ArrayList<>();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren())
+                    promotionList.add(snapshot.getValue(Promotion.class));
+                firebaseLoadPager.onFirebaseLoadSuccess(promotionList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                firebaseLoadPager.onFirebaseLoadFailed(databaseError.getMessage());
+
+            }
+        });*/
+        refPromotion.addValueEventListener(this);
+    }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item){
 
@@ -127,6 +160,45 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
+    @Override
+    public void onFirebaseLoadSuccess(List<Promotion> promotionList) {
+        pagerAdapter = new PageAdapter(this, promotionList);
+        pager.setAdapter(pagerAdapter);
+    }
 
+    @Override
+    public void onFirebaseLoadFailed(String message) {
+        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        List<Promotion>  promotionList = new ArrayList<>();
+        for (DataSnapshot snapshot: dataSnapshot.getChildren())
+            promotionList.add(snapshot.getValue(Promotion.class));
+        firebaseLoadPager.onFirebaseLoadSuccess(promotionList);
+    }
+
+    @Override
+    public void onCancelled(@NonNull DatabaseError databaseError) {
+        firebaseLoadPager.onFirebaseLoadFailed(databaseError.getMessage());
+    }
+
+    @Override
+    protected void onDestroy() {
+        refPromotion.removeEventListener(this);
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        refPromotion.addValueEventListener(this);
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        refPromotion.removeEventListener(this);
+        super.onStop();
+    }
 }

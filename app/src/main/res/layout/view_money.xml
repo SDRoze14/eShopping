@@ -4,7 +4,7 @@
     android:background="@drawable/view_money"
     android:layout_marginRight="30dp"
     android:layout_marginLeft="30dp"
-    android:paddingBottom="20dp">
+    android:paddingBottom="7dp">
 
     <TextView
         android:id="@+id/text_view_money"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="200"
             android:fontFamily="@font/prompt_medium"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"
             android:layout_marginRight="15dp"
