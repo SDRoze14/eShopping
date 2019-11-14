@@ -24,7 +24,7 @@
         <LinearLayout
             android:id="@+id/btn_add_new_product"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="135dp"
             android:orientation="vertical"
             android:background="#2196F3"
             android:gravity="center"
@@ -49,7 +49,7 @@
         <LinearLayout
         android:id="@+id/btn_view_product"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="135dp"
         android:orientation="vertical"
         android:background="#FF5722"
         android:gravity="center"
@@ -74,7 +74,7 @@
         <LinearLayout
             android:id="@+id/btn_scan_bill"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="135dp"
             android:orientation="vertical"
             android:background="#4CAF50"
             android:gravity="center"
@@ -99,9 +99,59 @@
         <LinearLayout
             android:id="@+id/promotion"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="135dp"
             android:orientation="vertical"
             android:background="#FF0000"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_margin="20dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_add_black_24dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="เพิ่มโปรโมชั่น"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/prompt_medium"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/counter"
+            android:layout_height="wrap_content"
+            android:layout_width="135dp"
+            android:orientation="vertical"
+            android:background="#9C27B0"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_margin="20dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_fullscreen_black_24dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="เค้าเตอร์"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/prompt_medium"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/setting"
+            android:layout_height="wrap_content"
+            android:layout_width="135dp"
+            android:orientation="vertical"
+            android:background="#7A7A7A"
             android:gravity="center"
             android:padding="10dp"
             android:layout_margin="20dp">

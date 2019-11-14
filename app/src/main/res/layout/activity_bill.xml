@@ -24,7 +24,7 @@
                 android:layout_marginRight="15dp"/>
 
             <TextView
-                android:id="@+id/id_order"
+                android:id="@+id/id_order_bill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Order ID : 09676525411210201991624"
@@ -57,47 +57,68 @@
         android:layout_margin="15dp"/>
 
     <TextView
-        android:id="@+id/total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/recycle_bill"
-        android:text="ราคารวม"
-        android:layout_margin="15dp"/>
+        android:text="จำนวน"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"/>
+
     <TextView
-        android:id="@+id/all_m"
+        android:id="@+id/all_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/recycle_bill"
         android:text="30.0 บาท"
-        android:layout_margin="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_alignParentRight="true"/>
 
     <TextView
-        android:id="@+id/date"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/total"
-        android:text="11/12/2019"
+        android:layout_below="@id/all_amount"
+        android:text="ราคารวม"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"/>
 
     <TextView
-        android:id="@+id/time"
+        android:id="@+id/all_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/all_amount"
+        android:text="30.0 บาท"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:id="@+id/date_bill"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/date"
+        android:layout_below="@+id/all_price"
+        android:text="11/12/2019"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"/>
+
+    <TextView
+        android:id="@+id/time_bill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/date_bill"
         android:text="09:54:46"
         android:layout_marginLeft="15dp"/>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/time"
+        android:layout_below="@id/time_bill"
         android:layout_margin="20dp"
         android:src="@drawable/qr"/>
-    <!--<androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_payment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar_payment"/>
--->
+
 </RelativeLayout>

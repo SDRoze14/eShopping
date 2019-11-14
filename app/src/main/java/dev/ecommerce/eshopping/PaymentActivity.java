@@ -36,6 +36,7 @@ public class PaymentActivity extends AppCompatActivity {
     private String order_id, tprice, txt_money, pprice, num;
     private Float money, balance, price;
 
+
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 

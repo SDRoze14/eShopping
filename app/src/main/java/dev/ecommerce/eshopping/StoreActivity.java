@@ -16,7 +16,7 @@ import io.paperdb.Paper;
 
 public class StoreActivity extends AppCompatActivity {
 
-    private LinearLayout  btn_add_new_product, btn_view_product, btn_scan_bill, btn_promotion;
+    private LinearLayout  btn_add_new_product, btn_view_product, btn_scan_bill, btn_promotion, counter;
     private TextView name_use_store;
     private Button btn_logout;
 
@@ -31,6 +31,7 @@ public class StoreActivity extends AppCompatActivity {
         btn_scan_bill = findViewById(R.id.btn_scan_bill);
         name_use_store = findViewById(R.id.name_use_store);
         btn_promotion = findViewById(R.id.promotion);
+        counter = findViewById(R.id.counter);
 
         name_use_store.setText(Prevalent.currentOnlineUser.getName());
 
@@ -71,6 +72,13 @@ public class StoreActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(StoreActivity.this, PromotionActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        counter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(StoreActivity.this, ConfirmPaymentActivity.class));
             }
         });
     }

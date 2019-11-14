@@ -1,10 +1,12 @@
 package dev.ecommerce.eshopping;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -40,12 +42,15 @@ public class ListActivity extends AppCompatActivity {
     private DatabaseReference listref;
 
     private String id,pcart, name;
-
     private float tprice = 0, price;
+    private int count;
 
     private Button btn_payment;
     private String d, t, orderID;
     private ImageView close_list;
+
+    private Dialog dialog;
+    private ImageView img_promotion, close_promotion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +102,14 @@ public class ListActivity extends AppCompatActivity {
 
     }
 
+    public  void PromotionDialog(){
+        dialog = new Dialog(ListActivity.this);
+        dialog.setContentView(R.layout.promotion_dialog);
+        img_promotion.?
+
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -112,9 +125,22 @@ public class ListActivity extends AppCompatActivity {
             protected void onBindViewHolder(final CartViewHolder cartViewHolder, int i, final Cart cart) {
 
                 cartViewHolder.txt_product_id.setText(cart.getProduct_id());
-                cartViewHolder.num.setText(cart.getUID());
+//                cartViewHolder.num.setText(cart.getUID());
 
                 id = cartViewHolder.txt_product_id.getText().toString();
+
+                final DatabaseReference promotionRef = FirebaseDatabase.getInstance().getReference()
+                        .child("Promotion").child(id);
+                promotionRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
                 final DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                         .child("Product").child(id);
@@ -122,14 +148,19 @@ public class ListActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
+                            String pid = dataSnapshot.child("id").getValue().toString();
                             String image = dataSnapshot.child("image").getValue().toString();
                             name = dataSnapshot.child("name").getValue().toString();
                             price = Float.valueOf(dataSnapshot.child("price").getValue().toString());
                             String p = Float.toString(price);
+                            String amount = dataSnapshot.child("amount").getValue().toString();
 
                             cartViewHolder.txt_product_name.setText(name);
                             cartViewHolder.txt_product_price.setText(p);
                             Picasso.get().load(image).into(cartViewHolder.imageView);
+
+
+                            cartViewHolder.num.setText(String.valueOf(count));
 
                             tprice += price;
                             total_ptice.setText("ราคารวม "+String.valueOf(tprice));
@@ -137,11 +168,13 @@ public class ListActivity extends AppCompatActivity {
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Orders").child(orderID);
 
                             HashMap<String, Object> orderMap = new HashMap<>();
-                            orderMap.put("product_id", id);
+                            orderMap.put("product_id", pid);
                             orderMap.put("name_product", name);
                             orderMap.put("price", price);
                             orderMap.put("uid", cart.getUID());
                             orderMap.put("id_order", orderID);
+                            orderMap.put("quality", 1);
+                            orderMap.put("amount", amount);
                             ref.child(cart.getUID()).updateChildren(orderMap);
                         }
 
