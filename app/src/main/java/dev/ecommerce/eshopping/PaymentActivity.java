@@ -33,8 +33,9 @@ public class PaymentActivity extends AppCompatActivity {
     private Button btn;
     private ImageView close;
     private TextView id_order, total_price, money_bill;
-    private String order_id, tprice, txt_money, pprice, num;
+    private String order_id, tprice, txt_money, pprice, num, ProPrice;
     private Float money, balance, price;
+    private float ttprice = 0;
 
 
     private RecyclerView recyclerView;
@@ -62,7 +63,7 @@ public class PaymentActivity extends AppCompatActivity {
         tprice = getIntent().getStringExtra("Total Price");
 
         id_order.setText("Order ID: \n"+order_id);
-        total_price.setText(tprice);
+//        total_price.setText(tprice);
         price = Float.valueOf(tprice);
 
 
@@ -133,11 +134,16 @@ public class PaymentActivity extends AppCompatActivity {
                     @Override
                     protected void onBindViewHolder(@NonNull OrdersViewHolder orderViewHolder, int i, @NonNull Orders orders) {
                         orderViewHolder.id_product.setText(orders.getProduct_id());
+                        String id = orders.getProduct_id();
                         num = String.valueOf(i+1);
                         orderViewHolder.number.setText(num);
                         orderViewHolder.name_product.setText(orders.getName_product());
                         pprice = String.valueOf(orders.getPrice());
+                        Float price = Float.valueOf(pprice);
                         orderViewHolder.price_product.setText(pprice);
+
+                        ttprice += price;
+                        total_price.setText(String.valueOf(ttprice));
 
                     }
 

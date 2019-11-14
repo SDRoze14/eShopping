@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="215dp" android:layout_height="215dp"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
     android:background="@android:color/transparent">
 
 
@@ -10,15 +10,6 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
-        android:background="#acb"
-        android:layout_marginTop="7dp"/>
-
-    <ImageView
-        android:id="@+id/close_promotion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_close_black_24dp"
-        android:background="#000000"
-        android:layout_alignParentRight="true"/>
+        android:background="#acb"/>
 
 </RelativeLayout>

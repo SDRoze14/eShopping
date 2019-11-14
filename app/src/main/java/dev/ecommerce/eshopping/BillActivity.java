@@ -32,7 +32,6 @@ public class BillActivity extends AppCompatActivity {
     private Float money, balance, price;
     private TextView id_order_bill, all_price, date_bill, time_bill, all_amount;
     private ImageView close;
-    private int amount, n, quality;
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -85,40 +84,16 @@ public class BillActivity extends AppCompatActivity {
                     @Override
                     protected void onBindViewHolder(@NonNull OrdersViewHolder orderViewHolder, int i, @NonNull Orders orders) {
                         orderViewHolder.id_product.setText(orders.getProduct_id());
-//                        num = String.valueOf(i+1);
-//                        orderViewHolder.number.setText(num);
+//
                         orderViewHolder.name_product.setText(orders.getName_product());
                         pprice = String.valueOf(orders.getPrice());
                         orderViewHolder.price_product.setText(pprice);
                         all_amount.setText(String.valueOf(i+1));
 
-                        quality = orders.getQuality();
+
                         uid = orders.getUid();
 
                         id = orders.getProduct_id();
-
-                       /* num = orders.getAmount();
-                        amount = Integer.parseInt(num);
-                        amount--;*/
-
-                       /* final DatabaseReference amountRef = FirebaseDatabase.getInstance().getReference().child("Product")
-                                .child(id);
-                        amountRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists()){
-                                    HashMap<String, Object> amountMap = new HashMap<>();
-                                    amountMap.put("amount", n);
-                                    amountRef.updateChildren(amountMap);
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });*/
-
 
 
                     }

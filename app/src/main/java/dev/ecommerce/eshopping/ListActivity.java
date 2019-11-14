@@ -44,13 +44,14 @@ public class ListActivity extends AppCompatActivity {
     private String id,pcart, name;
     private float tprice = 0, price;
     private int count;
+    private String p;
 
     private Button btn_payment;
     private String d, t, orderID;
     private ImageView close_list;
 
     private Dialog dialog;
-    private ImageView img_promotion, close_promotion;
+    private ImageView img_promotion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,13 +103,6 @@ public class ListActivity extends AppCompatActivity {
 
     }
 
-    public  void PromotionDialog(){
-        dialog = new Dialog(ListActivity.this);
-        dialog.setContentView(R.layout.promotion_dialog);
-        img_promotion.?
-
-
-    }
 
     @Override
     protected void onStart() {
@@ -134,6 +128,17 @@ public class ListActivity extends AppCompatActivity {
                 promotionRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            dialog = new Dialog(ListActivity.this);
+                            dialog.setContentView(R.layout.promotion_dialog);
+                            img_promotion = dialog.findViewById(R.id.img_promotion);
+
+
+                            String img_pro = dataSnapshot.child("image_promotion").getValue().toString();
+                            Picasso.get().load(img_pro).into(img_promotion);
+
+                            dialog.show();
+                        }
                     }
 
                     @Override
@@ -152,15 +157,41 @@ public class ListActivity extends AppCompatActivity {
                             String image = dataSnapshot.child("image").getValue().toString();
                             name = dataSnapshot.child("name").getValue().toString();
                             price = Float.valueOf(dataSnapshot.child("price").getValue().toString());
-                            String p = Float.toString(price);
-                            String amount = dataSnapshot.child("amount").getValue().toString();
+                            p = Float.toString(price);
 
                             cartViewHolder.txt_product_name.setText(name);
                             cartViewHolder.txt_product_price.setText(p);
                             Picasso.get().load(image).into(cartViewHolder.imageView);
 
+                            DatabaseReference proRef = FirebaseDatabase.getInstance().getReference().child("Promotion").child(pid);
+                            proRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()){
+                                        Float discount = Float.valueOf(dataSnapshot.child("discount").getValue().toString());
+                                        Float dis = discount/100;
+                                        Float price_dis = price*dis;
 
-                            cartViewHolder.num.setText(String.valueOf(count));
+                                        p = String.valueOf(price_dis);
+                                        cartViewHolder.txt_product_price.setText(p);
+
+                                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Orders").child(orderID);
+
+                                        HashMap<String, Object> orderMap = new HashMap<>();
+
+                                        orderMap.put("price", price_dis);
+                                        ref.child(cart.getUID()).updateChildren(orderMap);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+
+                            cartViewHolder.num.setText(null);
 
                             tprice += price;
                             total_ptice.setText("ราคารวม "+String.valueOf(tprice));
@@ -173,8 +204,6 @@ public class ListActivity extends AppCompatActivity {
                             orderMap.put("price", price);
                             orderMap.put("uid", cart.getUID());
                             orderMap.put("id_order", orderID);
-                            orderMap.put("quality", 1);
-                            orderMap.put("amount", amount);
                             ref.child(cart.getUID()).updateChildren(orderMap);
                         }
 
@@ -184,7 +213,6 @@ public class ListActivity extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
-
 
 
             }
