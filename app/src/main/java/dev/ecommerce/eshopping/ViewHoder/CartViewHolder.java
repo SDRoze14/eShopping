@@ -7,7 +7,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.rey.material.widget.Spinner;
 
 import dev.ecommerce.eshopping.Interface.ItemClickListner;
 import dev.ecommerce.eshopping.R;

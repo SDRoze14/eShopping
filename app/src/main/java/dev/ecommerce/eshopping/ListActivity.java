@@ -35,19 +35,16 @@ public class ListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private Button paymants;
     private TextView id_cart_top, total_ptice;
 
     private DatabaseReference listref;
 
     private String id,pcart, name;
-    private String[] nid;
 
     private float tprice = 0, price;
 
     private Button btn_payment;
-    private int day, mouth, year, hours, min, sec;
-    private String date ,d, t, y, hh, mm, ss, orderID;
+    private String d, t, orderID;
     private ImageView close_list;
 
     @Override
@@ -60,13 +57,14 @@ public class ListActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        paymants = findViewById(R.id.pay_list);
         id_cart_top = findViewById(R.id.id_cart_list);
         total_ptice = findViewById(R.id.list_total_price);
         btn_payment = findViewById(R.id.pay_list);
         close_list = findViewById(R.id.close_list);
 
         pcart = getIntent().getStringExtra("cart_id");
+
+        id_cart_top.setText("รหัสรถเข็น: "+pcart );
 
         listref = FirebaseDatabase.getInstance().getReference().child("Cart").child(pcart);
 
@@ -103,8 +101,6 @@ public class ListActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-
-
         FirebaseRecyclerOptions<Cart> options =
             new FirebaseRecyclerOptions.Builder<Cart>()
             .setQuery(listref, Cart.class)
@@ -138,13 +134,14 @@ public class ListActivity extends AppCompatActivity {
                             tprice += price;
                             total_ptice.setText("ราคารวม "+String.valueOf(tprice));
 
-                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Order").child(orderID);
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Orders").child(orderID);
 
                             HashMap<String, Object> orderMap = new HashMap<>();
-                            orderMap.put("id", id);
-                            orderMap.put("name", name);
+                            orderMap.put("product_id", id);
+                            orderMap.put("name_product", name);
                             orderMap.put("price", price);
                             orderMap.put("uid", cart.getUID());
+                            orderMap.put("id_order", orderID);
                             ref.child(cart.getUID()).updateChildren(orderMap);
                         }
 

@@ -7,7 +7,7 @@
     tools:context=".BillActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_payment"
+        android:id="@+id/toolbar_bill"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -37,160 +37,37 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:layout_below="@id/toolbar_payment"
+        android:layout_below="@id/toolbar_bill"
         android:background="@drawable/shadow_top"/>
 
-    <RelativeLayout
-        android:id="@+id/r1"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_bill"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_payment">
+        android:layout_below="@+id/toolbar_bill">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1"
-            android:layout_margin="10dp"/>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp">
-            <TextView
-                android:id="@+id/tv1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="8854698006347"
-                android:textSize="15sp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv1"
-                android:text="nestle"
-                android:textSize="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="15dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv1"
-                android:text="5.0 บาท"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"/>
-        </RelativeLayout>
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/r2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/r1">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2"
-            android:layout_margin="10dp"/>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp">
-            <TextView
-                android:id="@+id/tv2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="4007817528136"
-                android:textSize="15sp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv2"
-                android:text="STAEDTLER"
-                android:textSize="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="15dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv2"
-                android:text="10.0 บาท"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"/>
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/r3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/r2">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2"
-            android:layout_margin="10dp"/>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp">
-            <TextView
-                android:id="@+id/tv3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="8851295511014"
-                android:textSize="15sp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv3"
-                android:text="PILOT"
-                android:textSize="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="15dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv3"
-                android:text="15.0 บาท"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"/>
-        </RelativeLayout>
-    </RelativeLayout>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#888888"
-        android:layout_below="@id/r3"
+        android:layout_below="@id/recycle_bill"
         android:layout_margin="15dp"/>
 
     <TextView
         android:id="@+id/total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/r3"
+        android:layout_below="@id/recycle_bill"
         android:text="ราคารวม"
         android:layout_margin="15dp"/>
     <TextView
         android:id="@+id/all_m"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/r3"
+        android:layout_below="@id/recycle_bill"
         android:text="30.0 บาท"
         android:layout_margin="15dp"
         android:layout_alignParentRight="true"/>

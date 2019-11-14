@@ -120,7 +120,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/line">
 
-
     </androidx.recyclerview.widget.RecyclerView>
 
     <View

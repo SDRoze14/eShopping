@@ -1,6 +1,5 @@
 package dev.ecommerce.eshopping.Prevalent;
 
-import dev.ecommerce.eshopping.Model.Order;
 import dev.ecommerce.eshopping.Model.User;
 
 public class Prevalent {
