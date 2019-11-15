@@ -6,14 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,93 +21,76 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.zxing.WriterException;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
-
-import androidmads.library.qrgenearator.QRGContents;
-import androidmads.library.qrgenearator.QRGEncoder;
 import dev.ecommerce.eshopping.Model.Orders;
-import dev.ecommerce.eshopping.Prevalent.Prevalent;
 import dev.ecommerce.eshopping.ViewHoder.OrdersViewHolder;
 
-public class BillActivity extends AppCompatActivity {
+public class BillStoreActivity extends AppCompatActivity {
 
-    private String order_id, tprice, txt_money, pprice, num, id, uid, phone;
-    private Float money, balance, price;
-    private TextView id_order_bill, all_price, date_bill, time_bill, all_amount;
-    private ImageView close, qr_bill;
+    private ImageView close_bill_store;
+    private TextView id_order_bill_store, date_bill, time_bill;
+    private Button new_scan_bill;
 
-    private Bitmap bitmap;
-    private QRGEncoder qrgEncoder;
+    private String order_id, pprice, date, time;
+    private Float tprice;
+
+    private DatabaseReference orderRef;
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
-    private DatabaseReference orderRef;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bill);
+        setContentView(R.layout.activity_bill_store);
 
-        recyclerView = findViewById(R.id.recycle_bill);
+        recyclerView = findViewById(R.id.recycle_bil_store);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        id_order_bill = findViewById(R.id.id_order_bill);
-        close = findViewById(R.id.close);
-        all_price = findViewById(R.id.all_price);
-        all_amount = findViewById(R.id.all_amount);
+        close_bill_store = findViewById(R.id.close_bill_store);
+        id_order_bill_store = findViewById(R.id.id_order_bill_store);
         date_bill = findViewById(R.id.date_bill);
         time_bill = findViewById(R.id.time_bill);
-        qr_bill = findViewById(R.id.qr_bill);
-
-
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
-
-        date_bill.setText(date.format(calendar.getTime()));
-        time_bill.setText(time.format(calendar.getTime()));
+        new_scan_bill = findViewById(R.id.new_scan_bill);
 
         order_id = getIntent().getStringExtra("order_id");
-        tprice = getIntent().getStringExtra("total_price");
 
-        id_order_bill.setText(order_id);
-        all_price.setText(tprice);
-        phone = Prevalent.currentOnlineUser.getPhone();
+        id_order_bill_store.setText(order_id);
 
         orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(order_id);
-
-        close.setOnClickListener(new View.OnClickListener() {
+        DatabaseReference billRef = FirebaseDatabase.getInstance().getReference().child("Bill").child(order_id);
+        billRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BillActivity.this, HomeActivity.class));
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    date = dataSnapshot.child("date").getValue().toString();
+                    time = dataSnapshot.child("time").getValue().toString();
+                    date_bill.setText(date);
+                    time_bill.setText(time);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
-        WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        Display display = manager.getDefaultDisplay();
-        Point point = new Point();
-        display.getSize(point);
-        int width = point.x;
-        int height = point.y;
-        int smallerDimension = width < height ? width : height;
-        smallerDimension = smallerDimension * 3 / 4;
 
-        qrgEncoder = new QRGEncoder(
-                order_id, null,
-                QRGContents.Type.TEXT,
-                smallerDimension);
-        try {
-            bitmap = qrgEncoder.encodeAsBitmap();
-            qr_bill.setImageBitmap(bitmap);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
+        close_bill_store.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(BillStoreActivity.this, StoreActivity.class));
+            }
+        });
+
+        new_scan_bill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(BillStoreActivity.this, ScanBillActivity.class));
+            }
+        });
     }
 
     @Override
@@ -132,7 +112,6 @@ public class BillActivity extends AppCompatActivity {
                         pprice = String.valueOf(orders.getPrice());
                         orderViewHolder.price_product.setText(pprice);
                         orderViewHolder.number.setText(String.valueOf(i+1));
-                        all_amount.setText(String.valueOf(i+1));
 
                     }
 

@@ -13,49 +13,22 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.Result;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
-
-import dev.ecommerce.eshopping.Prevalent.Prevalent;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
 
-public class ScanPaymentActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
+public class ScanBillActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView scannerView;
-    private String order_id, tprice ,m, date_bill, time_bill;
-
-    private Float money, balance, price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
-
-        order_id = getIntent().getStringExtra("Order ID");
-        tprice = getIntent().getStringExtra("Total Price");
-        m = getIntent().getStringExtra("Money");
-
-        price = Float.valueOf(tprice);
-        money = Float.valueOf(m);
-
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
-
-        date_bill = date.format(calendar.getTime());
-        time_bill = time.format(calendar.getTime());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
@@ -64,6 +37,8 @@ public class ScanPaymentActivity extends AppCompatActivity implements ZXingScann
                 requestPermissions();
             }
         }
+
+
     }
 
     private void requestPermissions() {
@@ -71,7 +46,7 @@ public class ScanPaymentActivity extends AppCompatActivity implements ZXingScann
     }
 
     private boolean checkPermission() {
-        return (ContextCompat.checkSelfPermission(ScanPaymentActivity.this, CAMERA) == PackageManager.PERMISSION_GRANTED);
+        return (ContextCompat.checkSelfPermission(ScanBillActivity.this, CAMERA) == PackageManager.PERMISSION_GRANTED);
     }
 
     @Override
@@ -130,7 +105,7 @@ public class ScanPaymentActivity extends AppCompatActivity implements ZXingScann
     }
 
     public void dispalyAlertMessage(String message, DialogInterface.OnClickListener listener) {
-        new AlertDialog.Builder(ScanPaymentActivity.this)
+        new AlertDialog.Builder(ScanBillActivity.this)
                 .setMessage(message)
                 .setPositiveButton("OK", listener)
                 .setNegativeButton("Cancel", null)
@@ -141,57 +116,27 @@ public class ScanPaymentActivity extends AppCompatActivity implements ZXingScann
 
     @Override
     public void handleResult(Result result) {
+
         final String scan_result = result.getText();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Payment");
+        builder.setTitle("Scan result");
         builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String number = Prevalent.currentOnlineUser.getPhone();
-                if (!scan_result.equals( number)) {
-
-                    Toast.makeText(ScanPaymentActivity.this, "หมายเลขไม่ถูกต้อง", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(ScanPaymentActivity.this, HomeActivity.class);
-                    startActivity(intent);
-
-                }else {
-
-                    Intent intent = new Intent(ScanPaymentActivity.this, BillActivity.class);
-                    intent.putExtra("order_id",order_id);
-                    intent.putExtra("total_price", String.valueOf(tprice));
-                    startActivity(intent);
-
-                    balance = money - price;
-
-
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users")
-                            .child(Prevalent.currentOnlineUser.getPhone());
-
-                    HashMap<String, Object> moneyMap = new HashMap<>();
-                    moneyMap.put("money", balance);
-                    reference.updateChildren(moneyMap);
-
-                    DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(order_id);
-                    DatabaseReference billRef = FirebaseDatabase.getInstance().getReference().child("Bill").child(order_id);
-                    HashMap<String, Object> billMap = new HashMap<>();
-                    billMap.put("order_id", order_id);
-                    billMap.put("total_price", tprice);
-                    billMap.put("date", date_bill);
-                    billMap.put("time", time_bill);
-                    billMap.put("phone", Prevalent.currentOnlineUser.getPhone());
-                    billRef.updateChildren(billMap);
-
-                }
+                Intent intent = new Intent(ScanBillActivity.this, BillStoreActivity.class);
+                intent.putExtra("order_id",scan_result);
+                startActivity(intent);
             }
         });
         builder.setNeutralButton("สแกนอีกครั้ง", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                scannerView.resumeCameraPreview(ScanPaymentActivity.this);
+                scannerView.resumeCameraPreview(ScanBillActivity.this);
             }
         });
-        builder.setMessage(String.valueOf(scan_result));
+        builder.setMessage(scan_result);
         AlertDialog dialog = builder.create();
         dialog.show();
+
     }
 }

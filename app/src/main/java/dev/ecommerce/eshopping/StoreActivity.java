@@ -64,7 +64,7 @@ public class StoreActivity extends AppCompatActivity {
         btn_scan_bill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(StoreActivity.this, "Scan bill", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(StoreActivity.this, ScanBillActivity.class));
             }
         });
 
