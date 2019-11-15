@@ -122,7 +122,7 @@ public class PromotionActivity extends AppCompatActivity{
 
 //        date start promotion
 
-        date_start.setText(day+"/"+mouth+"/"+syear);
+        date_start.setText(syear+""+mouth+""+day);
         sdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,7 +139,7 @@ public class PromotionActivity extends AppCompatActivity{
         });
 
 //        date end promotion
-        date_end.setText(day+"/"+mouth+"/"+syear);
+        date_end.setText(syear+""+mouth+""+day);
         edate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

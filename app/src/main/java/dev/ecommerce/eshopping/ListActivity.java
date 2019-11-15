@@ -43,11 +43,11 @@ public class ListActivity extends AppCompatActivity {
 
     private String id,pcart, name;
     private float tprice = 0, price;
-    private int count;
+    private int count, cd, ce;
     private String p;
 
     private Button btn_payment;
-    private String d, t, orderID;
+    private String d, t, orderID, current_date;
     private ImageView close_list;
 
     private Dialog dialog;
@@ -77,9 +77,12 @@ public class ListActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat date = new SimpleDateFormat("ddMMyyyy");
         SimpleDateFormat time = new SimpleDateFormat("HHmmss");
+        SimpleDateFormat currentDate = new SimpleDateFormat("yyyyMMdd");
 
         d = date.format(calendar.getTime());
         t = time.format(calendar.getTime());
+        current_date = date.format(calendar.getTime());
+        cd = Integer.parseInt(current_date);
 
         orderID = Prevalent.currentOnlineUser.getPhone()+pcart+d+t;
 
@@ -133,11 +136,15 @@ public class ListActivity extends AppCompatActivity {
                             dialog.setContentView(R.layout.promotion_dialog);
                             img_promotion = dialog.findViewById(R.id.img_promotion);
 
+                            String date_end = dataSnapshot.child("date_end").getValue().toString();
+                            ce = Integer.parseInt(date_end);
+                            if (cd < ce) {
+                                String img_pro = dataSnapshot.child("image_promotion").getValue().toString();
+                                Picasso.get().load(img_pro).into(img_promotion);
 
-                            String img_pro = dataSnapshot.child("image_promotion").getValue().toString();
-                            Picasso.get().load(img_pro).into(img_promotion);
+                                dialog.show();
+                            }
 
-                            dialog.show();
                         }
                     }
 
@@ -171,16 +178,23 @@ public class ListActivity extends AppCompatActivity {
                                         Float discount = Float.valueOf(dataSnapshot.child("discount").getValue().toString());
                                         Float dis = discount/100;
                                         Float price_dis = price*dis;
+                                        String d = String.format("%.0f", discount);
+                                        String date_end = dataSnapshot.child("date_end").getValue().toString();
+                                        ce = Integer.parseInt(date_end);
 
                                         p = String.valueOf(price_dis);
-                                        cartViewHolder.txt_product_price.setText(p);
 
-                                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Orders").child(orderID);
+                                        if (cd < ce) {
+                                            cartViewHolder.num.setText("ส่วนลด: " + String.valueOf(d) + "%");
+                                            cartViewHolder.num.setTextSize(15);
 
-                                        HashMap<String, Object> orderMap = new HashMap<>();
+                                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Orders").child(orderID);
 
-                                        orderMap.put("price", price_dis);
-                                        ref.child(cart.getUID()).updateChildren(orderMap);
+                                            HashMap<String, Object> orderMap = new HashMap<>();
+
+                                            orderMap.put("price", price_dis);
+                                            ref.child(cart.getUID()).updateChildren(orderMap);
+                                        }
                                     }
                                 }
 
@@ -191,7 +205,7 @@ public class ListActivity extends AppCompatActivity {
                             });
 
 
-                            cartViewHolder.num.setText(null);
+
 
                             tprice += price;
                             total_ptice.setText("ราคารวม "+String.valueOf(tprice));

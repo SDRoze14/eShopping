@@ -61,5 +61,7 @@ dependencies {
 
     implementation 'com.github.romandanylyk:PageIndicatorView:v0.1.2'
 
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
+
 
 }

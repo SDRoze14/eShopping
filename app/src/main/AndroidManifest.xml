@@ -16,8 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConfirmPaymentActivity"
-            android:screenOrientation="landscape"></activity>
+        <activity android:name=".ScanPaymentActivity"></activity>
+        <activity
+            android:name=".ConfirmPaymentActivity" />
         <activity android:name=".PaymentActivity" />
         <activity android:name=".BillActivity" />
         <activity android:name=".AddMoneyActivity" />

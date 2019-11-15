@@ -67,18 +67,33 @@ public class PaymentActivity extends AppCompatActivity {
         price = Float.valueOf(tprice);
 
 
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users")
+                .child(Prevalent.currentOnlineUser.getPhone());
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    money = Float.valueOf(dataSnapshot.child("money").getValue().toString());
+                    money_bill.setText(String.valueOf(money));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(order_id);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PaymentActivity.this, BillActivity.class);
+                Intent intent = new Intent(PaymentActivity.this, ScanPaymentActivity.class);
                 intent.putExtra("Order ID", order_id);
-                intent.putExtra("Total Price", tprice);
+                intent.putExtra("Total Price", String.valueOf(ttprice));
+                intent.putExtra("Money", String.valueOf(money));
                 startActivity(intent);
-
-                updateMoney();
             }
         });
 
@@ -89,35 +104,13 @@ public class PaymentActivity extends AppCompatActivity {
             }
         });
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users")
-                .child(Prevalent.currentOnlineUser.getPhone());
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    money = Float.valueOf(dataSnapshot.child("money").getValue().toString());
-                    txt_money = String.valueOf(money);
-                    money_bill.setText(txt_money);
-                    balance = money - price;
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
     }
 
     private void updateMoney() {
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users")
-                .child(Prevalent.currentOnlineUser.getPhone());
 
-        HashMap<String, Object> moneyMap = new HashMap<>();
-        moneyMap.put("money", balance);
-        reference.updateChildren(moneyMap);
     }
 
     @Override
@@ -144,6 +137,7 @@ public class PaymentActivity extends AppCompatActivity {
 
                         ttprice += price;
                         total_price.setText(String.valueOf(ttprice));
+
 
                     }
 

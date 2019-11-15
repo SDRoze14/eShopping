@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import dev.ecommerce.eshopping.Model.Orders;
@@ -54,8 +56,15 @@ public class BillActivity extends AppCompatActivity {
         date_bill = findViewById(R.id.date_bill);
         time_bill = findViewById(R.id.time_bill);
 
-        order_id = getIntent().getStringExtra("Order ID");
-        tprice = getIntent().getStringExtra("Total Price");
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
+
+        date_bill.setText(date.format(calendar.getTime()));
+        time_bill.setText(time.format(calendar.getTime()));
+
+        order_id = getIntent().getStringExtra("order_id");
+        tprice = getIntent().getStringExtra("total_price");
 
         id_order_bill.setText(order_id);
         all_price.setText(tprice);
