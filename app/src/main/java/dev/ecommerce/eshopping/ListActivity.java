@@ -205,7 +205,7 @@ public class ListActivity extends AppCompatActivity {
                             });
 
 
-
+                            cartViewHolder.num.setText(null);
 
                             tprice += price;
                             total_ptice.setText("ราคารวม "+String.valueOf(tprice));

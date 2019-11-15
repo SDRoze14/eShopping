@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StoreAddProductActivity">
+    tools:context=".EditProductActivity">
 
     <RelativeLayout
-        android:id="@+id/bar_add_product"
+        android:id="@+id/bar_edit_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp">
 
         <TextView
-            android:id="@+id/close_add_product"
+            android:id="@+id/close_edit_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ปิด"
@@ -26,7 +26,7 @@
             android:id="@+id/txt_slogan_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="เพิ่มสินค้า"
+            android:text="แก้ไขสินค้า"
             android:fontFamily="@font/prompt_medium"
             android:textAlignment="center"
             android:textSize="23sp"
@@ -34,7 +34,7 @@
             android:layout_centerHorizontal="true"/>
 
         <TextView
-            android:id="@+id/done_add_product"
+            android:id="@+id/done_edit_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="บันทึก"
@@ -46,17 +46,17 @@
     </RelativeLayout>
 
     <ScrollView
-        android:id="@+id/scroll_add_product"
+        android:id="@+id/scroll_edit_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bar_add_product">
+        android:layout_below="@id/bar_edit_product">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/linear_add_product"
+                android:id="@+id/linear_edit_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -76,16 +76,6 @@
                     android:paddingTop="10dp"
                     android:inputType="number"
                     android:importantForAutofill="no" />
-
-                <Button
-                    android:id="@+id/btn_scan_barcode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="สแกน"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/prompt_medium"
-                    android:background="@color/colorPrimary"
-                    android:layout_marginLeft="10dp"/>
             </LinearLayout>
 
 
@@ -94,7 +84,7 @@
                 android:id="@+id/pname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/linear_add_product"
+                android:layout_below="@id/linear_edit_product"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp">
@@ -220,5 +210,8 @@
                 android:src="@drawable/ic_image_black_24dp"/>
 
         </RelativeLayout>
+
+
     </ScrollView>
+
 </RelativeLayout>

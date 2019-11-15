@@ -46,7 +46,7 @@ import dev.ecommerce.eshopping.Prevalent.Prevalent;
 
 public class StoreAddProductActivity extends AppCompatActivity {
 
-    private EditText product_name, product_price, product_description, product_amount;
+    private EditText product_name, product_price, product_description;
     public static TextView editText_barcode = null;
     private TextView product_date, product_time, close, done;
     private ImageView product_image;
@@ -79,7 +79,6 @@ public class StoreAddProductActivity extends AppCompatActivity {
         close = findViewById(R.id.close_add_product);
         done = findViewById(R.id.done_add_product);
         product_image = findViewById(R.id.img_product);
-        product_amount = findViewById(R.id.edit_pamount);
         spinner_pcategory = findViewById(R.id.spinner_pcategory);
 
         //set spinner-------------------------------------------------------------------------
@@ -167,7 +166,6 @@ public class StoreAddProductActivity extends AppCompatActivity {
         price = Float.valueOf(product_price.getText().toString());
         pdescription = product_description.getText().toString();
         pcategory = spinner_pcategory.getSelectedItem().toString();
-        pamount = product_amount.getText().toString();
 
         if (uri == null) {
             Toast.makeText(this, "กรุณาใส่รูปสินค้า", Toast.LENGTH_SHORT).show();
@@ -186,18 +184,15 @@ public class StoreAddProductActivity extends AppCompatActivity {
         }
         else if (pcategory == "กรุณาเลือกประเภทสินค้า") {
             Toast.makeText(this, "กรุณาเลือกประเภทสินค้า", Toast.LENGTH_SHORT).show();
-        }else if (TextUtils.isEmpty(pamount)) {
-            Toast.makeText(this, "กรุณาใส่จำนวนสินค้า", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            StoreProductInformation(pcode, puid, pname, price, pdescription, pcategory, pamount);
+        }        else {
+            StoreProductInformation(pcode, puid, pname, price, pdescription, pcategory);
         }
     }
 
     // add category to category database------------------------------------------------------------------
 
     // add data to product database;
-    private void StoreProductInformation(final String pcode, final String puid, final String pname, final Float price, final String pdescription, final String pcategory, final String pamount) {
+    private void StoreProductInformation(final String pcode, final String puid, final String pname, final Float price, final String pdescription, final String pcategory) {
         loadingBar.setTitle("เพิ่มสินค้าใหม่");
         loadingBar.setMessage("กรุณารอสักครู่กำลังเพิ่มสินค้าใหม่");
         loadingBar.setCanceledOnTouchOutside(false);
@@ -238,7 +233,6 @@ public class StoreAddProductActivity extends AppCompatActivity {
                                 productMap.put("price", price);
                                 productMap.put("category", pcategory);
                                 productMap.put("description", pdescription);
-                                productMap.put("amount", pamount);
                                 productMap.put("time", ptime);
                                 productMap.put("date", pdate);
                                 productMap.put("image", myUri);

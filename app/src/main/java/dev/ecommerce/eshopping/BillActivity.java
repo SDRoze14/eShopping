@@ -6,10 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,11 +24,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.WriterException;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
 import dev.ecommerce.eshopping.Model.Orders;
 import dev.ecommerce.eshopping.ViewHoder.OrdersViewHolder;
 
@@ -33,7 +40,10 @@ public class BillActivity extends AppCompatActivity {
     private String order_id, tprice, txt_money, pprice, num, id, uid;
     private Float money, balance, price;
     private TextView id_order_bill, all_price, date_bill, time_bill, all_amount;
-    private ImageView close;
+    private ImageView close, qr_bill;
+
+    private Bitmap bitmap;
+    private QRGEncoder qrgEncoder;
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -55,6 +65,8 @@ public class BillActivity extends AppCompatActivity {
         all_amount = findViewById(R.id.all_amount);
         date_bill = findViewById(R.id.date_bill);
         time_bill = findViewById(R.id.time_bill);
+        qr_bill = findViewById(R.id.qr_bill);
+
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
@@ -77,6 +89,26 @@ public class BillActivity extends AppCompatActivity {
                 startActivity(new Intent(BillActivity.this, HomeActivity.class));
             }
         });
+
+        WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        Display display = manager.getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+        int width = point.x;
+        int height = point.y;
+        int smallerDimension = width < height ? width : height;
+        smallerDimension = smallerDimension * 3 / 4;
+
+        qrgEncoder = new QRGEncoder(
+                order_id, null,
+                QRGContents.Type.TEXT,
+                smallerDimension);
+        try {
+            bitmap = qrgEncoder.encodeAsBitmap();
+            qr_bill.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

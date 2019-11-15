@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_width="135dp"
         android:orientation="vertical"
-        android:background="#FF5722"
+        android:background="#3F51B5"
         android:gravity="center"
         android:padding="10dp"
         android:layout_margin="20dp">
@@ -67,32 +67,7 @@
             android:text="รายการสินค้า"
             android:textSize="20sp"
             android:textColor="@android:color/white"
-                android:fontFamily="@font/prompt_medium"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btn_scan_bill"
-            android:layout_height="wrap_content"
-            android:layout_width="135dp"
-            android:orientation="vertical"
-            android:background="#4CAF50"
-            android:gravity="center"
-            android:padding="10dp"
-            android:layout_margin="20dp">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_fullscreen_black_24dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="สแกนใบเสร็จ"
-                android:textSize="20sp"
-                android:textColor="@android:color/white"
-                android:fontFamily="@font/prompt_medium"/>
+            android:fontFamily="@font/prompt_medium"/>
 
         </LinearLayout>
 
@@ -122,11 +97,36 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/counter"
+            android:id="@+id/promotion_list"
             android:layout_height="wrap_content"
             android:layout_width="135dp"
             android:orientation="vertical"
-            android:background="#9C27B0"
+            android:background="#FF5722"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_margin="20dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_format_list_bulleted_black_24dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="เพิ่มโปรโมชั่น"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/prompt_medium"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_scan_bill"
+            android:layout_height="wrap_content"
+            android:layout_width="135dp"
+            android:orientation="vertical"
+            android:background="#4CAF50"
             android:gravity="center"
             android:padding="10dp"
             android:layout_margin="20dp">
@@ -139,19 +139,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="เค้าเตอร์"
+                android:text="สแกนใบเสร็จ"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"
                 android:fontFamily="@font/prompt_medium"/>
 
         </LinearLayout>
 
+
+
         <LinearLayout
-            android:id="@+id/setting"
+            android:id="@+id/counter"
             android:layout_height="wrap_content"
             android:layout_width="135dp"
             android:orientation="vertical"
-            android:background="#7A7A7A"
+            android:background="#9C27B0"
             android:gravity="center"
             android:padding="10dp"
             android:layout_margin="20dp">
@@ -159,18 +161,34 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_add_black_24dp"/>
+                android:src="@drawable/ic_store_black_24dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="เพิ่มโปรโมชั่น"
+                android:text="เค้าเตอร์"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"
                 android:fontFamily="@font/prompt_medium"/>
 
         </LinearLayout>
+
+
     </GridLayout>
+
+    <Button
+        android:id="@+id/btn_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_logout"
+        android:text="ตั้งค่าบัญชี"
+        android:textSize="21sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/prompt"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="#ADADAD"/>
 
     <Button
         android:id="@+id/btn_logout"
@@ -182,7 +200,9 @@
         android:fontFamily="@font/prompt"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="#ADADAD"/>
 
 <!--    <RelativeLayout-->
 <!--        android:id="@+id/ralat_1"-->
