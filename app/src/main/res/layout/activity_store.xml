@@ -176,6 +176,7 @@
 
     </GridLayout>
 
+<!--
     <Button
         android:id="@+id/btn_setting"
         android:layout_width="match_parent"
@@ -189,6 +190,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
         android:background="#ADADAD"/>
+-->
 
     <Button
         android:id="@+id/btn_logout"

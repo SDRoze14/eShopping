@@ -37,7 +37,7 @@ public class ListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private TextView id_cart_top, total_ptice;
+    private TextView id_cart_top;
 
     private DatabaseReference listref;
 
@@ -64,7 +64,7 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         id_cart_top = findViewById(R.id.id_cart_list);
-        total_ptice = findViewById(R.id.list_total_price);
+
         btn_payment = findViewById(R.id.pay_list);
         close_list = findViewById(R.id.close_list);
 
@@ -77,7 +77,7 @@ public class ListActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat date = new SimpleDateFormat("ddMMyyyy");
         SimpleDateFormat time = new SimpleDateFormat("HHmmss");
-        SimpleDateFormat currentDate = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
 
         d = date.format(calendar.getTime());
         t = time.format(calendar.getTime());
@@ -92,6 +92,7 @@ public class ListActivity extends AppCompatActivity {
                 Intent intent = new Intent(ListActivity.this, PaymentActivity.class);
                 intent.putExtra("Total Price", String.valueOf(tprice));
                 intent.putExtra("Order ID", orderID);
+                intent.putExtra("pcart", pcart);
                 startActivity(intent);
                 finish();
             }
@@ -112,12 +113,12 @@ public class ListActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseRecyclerOptions<Cart> options =
-            new FirebaseRecyclerOptions.Builder<Cart>()
-            .setQuery(listref, Cart.class)
-                .build();
+                new FirebaseRecyclerOptions.Builder<Cart>()
+                        .setQuery(listref, Cart.class)
+                        .build();
 
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter
-            = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
+                = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
             @Override
             protected void onBindViewHolder(final CartViewHolder cartViewHolder, int i, final Cart cart) {
 
@@ -188,12 +189,12 @@ public class ListActivity extends AppCompatActivity {
                                             cartViewHolder.num.setText("ส่วนลด: " + String.valueOf(d) + "%");
                                             cartViewHolder.num.setTextSize(15);
 
-                                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Orders").child(orderID);
+                                            /*DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Orders").child(orderID);
 
                                             HashMap<String, Object> orderMap = new HashMap<>();
 
                                             orderMap.put("price", price_dis);
-                                            ref.child(cart.getUID()).updateChildren(orderMap);
+                                            ref.child(cart.getUID()).updateChildren(orderMap);*/
                                         }
                                     }
                                 }
@@ -208,9 +209,8 @@ public class ListActivity extends AppCompatActivity {
                             cartViewHolder.num.setText(null);
 
                             tprice += price;
-                            total_ptice.setText("ราคารวม "+String.valueOf(tprice));
 
-                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Orders").child(orderID);
+                            /*DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Orders").child(orderID);
 
                             HashMap<String, Object> orderMap = new HashMap<>();
                             orderMap.put("product_id", pid);
@@ -218,7 +218,7 @@ public class ListActivity extends AppCompatActivity {
                             orderMap.put("price", price);
                             orderMap.put("uid", cart.getUID());
                             orderMap.put("id_order", orderID);
-                            ref.child(cart.getUID()).updateChildren(orderMap);
+                            ref.child(cart.getUID()).updateChildren(orderMap);*/
                         }
 
                     }

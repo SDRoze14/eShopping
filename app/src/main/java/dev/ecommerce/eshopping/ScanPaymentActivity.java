@@ -54,8 +54,8 @@ public class ScanPaymentActivity extends AppCompatActivity implements ZXingScann
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
 
-        date_bill = date.format(calendar.getTime());
-        time_bill = time.format(calendar.getTime());
+        date_bill = date.format(calendar.getTime());        time_bill = time.format(calendar.getTime());
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkPermission()) {

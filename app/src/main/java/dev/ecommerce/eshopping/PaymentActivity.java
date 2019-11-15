@@ -21,11 +21,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
+import dev.ecommerce.eshopping.Model.Cart;
 import dev.ecommerce.eshopping.Model.Orders;
 import dev.ecommerce.eshopping.Prevalent.Prevalent;
+import dev.ecommerce.eshopping.ViewHoder.CartViewHolder;
 import dev.ecommerce.eshopping.ViewHoder.OrdersViewHolder;
 
 public class PaymentActivity extends AppCompatActivity {
@@ -33,15 +38,18 @@ public class PaymentActivity extends AppCompatActivity {
     private Button btn;
     private ImageView close;
     private TextView id_order, total_price, money_bill;
-    private String order_id, tprice, txt_money, pprice, num, ProPrice;
+    private String order_id, tprice, p, pprice, num, pcart, id, name, d, t, current_date,orderID;
     private Float money, balance, price;
     private float ttprice = 0;
+    private int cd, ce ;
 
+    private float ttp = 0;
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
     private DatabaseReference orderRef;
+    private DatabaseReference listref;
 //    private float ;
 
     @Override
@@ -61,6 +69,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         order_id = getIntent().getStringExtra("Order ID");
         tprice = getIntent().getStringExtra("Total Price");
+        pcart =getIntent().getStringExtra("pcart");
 
         id_order.setText("Order ID: \n"+order_id);
 //        total_price.setText(tprice);
@@ -85,13 +94,14 @@ public class PaymentActivity extends AppCompatActivity {
         });
 
         orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(order_id);
+        listref = FirebaseDatabase.getInstance().getReference().child("Cart").child(pcart);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PaymentActivity.this, ScanPaymentActivity.class);
-                intent.putExtra("Order ID", order_id);
-                intent.putExtra("Total Price", String.valueOf(ttprice));
+                intent.putExtra("Order ID", orderID);
+                intent.putExtra("Total Price", String.valueOf(ttp));
                 intent.putExtra("Money", String.valueOf(money));
                 startActivity(intent);
             }
@@ -104,7 +114,17 @@ public class PaymentActivity extends AppCompatActivity {
             }
         });
 
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat date = new SimpleDateFormat("ddMMyyyy");
+        SimpleDateFormat time = new SimpleDateFormat("HHmmss");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
 
+        d = date.format(calendar.getTime());
+        t = time.format(calendar.getTime());
+        current_date = date.format(calendar.getTime());
+        cd = Integer.parseInt(current_date);
+
+        orderID = Prevalent.currentOnlineUser.getPhone()+pcart+d+t;
 
     }
 
@@ -117,39 +137,97 @@ public class PaymentActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseRecyclerOptions<Orders> options =
-                new FirebaseRecyclerOptions.Builder<Orders>()
-                .setQuery(orderRef, Orders.class)
-                .build();
+        FirebaseRecyclerOptions<Cart> options =
+                new FirebaseRecyclerOptions.Builder<Cart>()
+                        .setQuery(listref, Cart.class)
+                        .build();
 
-        FirebaseRecyclerAdapter<Orders, OrdersViewHolder> adapter =
-                new FirebaseRecyclerAdapter<Orders, OrdersViewHolder>(options) {
+        FirebaseRecyclerAdapter<Cart, OrdersViewHolder> adapter
+                = new FirebaseRecyclerAdapter<Cart, OrdersViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(final OrdersViewHolder orderViewHolder, int i, final Cart cart) {
+
+                orderViewHolder.id_product.setText(cart.getProduct_id());
+                id = cart.getProduct_id();
+
+                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                        .child("Product").child(id);
+                reference.addValueEventListener(new ValueEventListener() {
                     @Override
-                    protected void onBindViewHolder(@NonNull OrdersViewHolder orderViewHolder, int i, @NonNull Orders orders) {
-                        orderViewHolder.id_product.setText(orders.getProduct_id());
-                        String id = orders.getProduct_id();
-                        num = String.valueOf(i+1);
-                        orderViewHolder.number.setText(num);
-                        orderViewHolder.name_product.setText(orders.getName_product());
-                        pprice = String.valueOf(orders.getPrice());
-                        Float price = Float.valueOf(pprice);
-                        orderViewHolder.price_product.setText(pprice);
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            String pid = dataSnapshot.child("id").getValue().toString();
+                            name = dataSnapshot.child("name").getValue().toString();
+                            price = Float.valueOf(dataSnapshot.child("price").getValue().toString());
+                            p = Float.toString(price);
 
-                        ttprice += price;
-                        total_price.setText(String.valueOf(ttprice));
+                            orderViewHolder.name_product.setText(name);
+                            orderViewHolder.price_product.setText(p);
 
+                            DatabaseReference proRef = FirebaseDatabase.getInstance().getReference().child("Promotion").child(pid);
+                            proRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()){
+                                        Float discount = Float.valueOf(dataSnapshot.child("discount").getValue().toString());
+                                        Float dis = discount/100;
+                                        Float price_dis = price*dis;
+                                        String date_end = dataSnapshot.child("date_end").getValue().toString();
+                                        ce = Integer.parseInt(date_end);
+
+                                        p = String.valueOf(price_dis);
+
+                                        if (cd < ce) {
+
+                                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Orders").child(orderID);
+
+                                            HashMap<String, Object> orderMap = new HashMap<>();
+
+                                            orderMap.put("price", price_dis);
+                                            ref.child(cart.getUID()).updateChildren(orderMap);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                            ttp += price;
+                            total_price.setText(String.valueOf(ttp));
+
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Orders").child(orderID);
+
+                            HashMap<String, Object> orderMap = new HashMap<>();
+                            orderMap.put("product_id", pid);
+                            orderMap.put("name_product", name);
+                            orderMap.put("price", price);
+                            orderMap.put("uid", cart.getUID());
+                            orderMap.put("id_order", orderID);
+                            ref.child(cart.getUID()).updateChildren(orderMap);
+                        }
 
                     }
 
-                    @NonNull
                     @Override
-                    public OrdersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_card_view, parent, false);
-                        OrdersViewHolder holder = new OrdersViewHolder(view);
-                        return holder;
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
-                };
-            recyclerView.setAdapter(adapter);
-            adapter.startListening();
+                });
+
+
+            }
+
+            @NonNull
+            @Override
+            public OrdersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_card_view, parent, false);
+                OrdersViewHolder holder = new OrdersViewHolder(view);
+                return holder;
+            }
+        };
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
     }
 }
